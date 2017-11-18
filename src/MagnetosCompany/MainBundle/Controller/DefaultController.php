@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class DefaultController extends Controller
 {
-    public function indexAction()
+    public function homeAction()
     {
-        return $this->render('MainBundle:Default:index.html.twig');
+        return $this->render('MainBundle:Default:home.html.twig');
     }
 }

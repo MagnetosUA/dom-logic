@@ -1,3 +1,48 @@
 main_home:
     path:     /
     defaults: { _controller: MainBundle:Default:home }
+
+main_rooms:
+    path:     /rooms
+    defaults: { _controller: MainBundle:Default:rooms }
+
+main_devicemanager:
+    path:     /devicemanager
+    defaults: { _controller: MainBundle:Default:devicemanager }
+
+main_settings:
+    path:     /settings
+    defaults: { _controller: MainBundle:Default:settings }
+
+main_addroom:
+    path:     /settings/addroom
+    defaults: { _controller: MainBundle:Default:addroom }
+
+main_successroom:
+    path:     /settings/successroom
+    defaults: { _controller: MainBundle:Default:succesroom}
+
+main_owserver:
+    path:     /owserver
+    defaults: { _controller: MainBundle:Ow:owsensor }
+
+main_adddevice:
+    path:     /settings/adddevice
+    defaults: { _controller: MainBundle:Default:adddevice }
+
+main_successdevice:
+    path:     /settings/successdevice
+    defaults: { _controller: MainBundle:Default:succesdevice}
+
+main_addtask:
+    path:     /settings/addtask
+    defaults: { _controller: MainBundle:Default:addtask}
+
+main_deletetask:
+    path:     /delete_task
+    defaults: { _controller: MainBundle:Default:deleteTask}
+
+main_widgets:
+    path:     /widgets
+    defaults: { _controller: MainBundle:Default:widgets}
+

@@ -1,0 +1,19 @@
+{% extends '@Main/base.html.twig' %}
+{% block main_content %}
+    <style>
+        a{
+            color:white;
+            font-size: 20px;
+        }
+        a:hover{
+            color:red;
+        }
+    </style>
+    <div class="col-md-9 text-left">
+        <a href="{{ path('main_addroom') }}" >Добавить комнату</a>
+        <hr>
+        <a href="{{ path('main_adddevice') }}" >Добавить устройство</a>
+        <hr>
+        <a href="{{ path('main_addtask') }}" >Добавить задание</a>
+    </div>
+{% endblock main_content %}

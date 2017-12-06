@@ -1,0 +1,12 @@
+{% extends '@Main/base.html.twig' %}
+{% block main_content %}
+    {% if thing == 'room' %}
+    <h1>Комната с названием <b>"{{ name }}"</b> успешно добавлена !</b></h1>
+    {% endif %}
+    {% if thing == 'device' %}
+        <h1>Устройство с названием <b>"{{ name }}"</b> успешно добавлено !</b></h1>
+    {% endif %}
+    {% if thing == 'task' %}
+        <h1>Задание <b>"{{ name }}"</b> успешно добавлено !</b></h1>
+    {% endif %}
+{% endblock main_content %}

@@ -1,0 +1,28 @@
+{% extends '@Main/base.html.twig' %}
+{% block main_content %}
+    <style>
+        .weather{
+            color:white;
+            font-size:25px;
+        }
+    </style>
+    <div class="row weather">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-8">
+            <h3>Список виджетов</h3>
+            <ol>
+                <form method="get" action="{{ path('main_widgets') }}">
+                    <li>
+                        Прогноз погоды <input id="checkBox" {% if widget.getStatus==1 %}checked{% endif %} name="weather" type="checkbox">
+                    </li>
+
+                    <input type="submit" style="color:black;"  class="done" name="submit" value="Выполнить"/>
+                </form>
+            </ol>
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+
+{% endblock main_content%}

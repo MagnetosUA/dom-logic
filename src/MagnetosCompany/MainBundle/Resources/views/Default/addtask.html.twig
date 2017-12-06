@@ -1,0 +1,19 @@
+{% extends '@Main/base.html.twig' %}
+{% block main_content %}
+    <div class="col-md-9 text-left">
+        <form class="form-horizontal" action="{{ path('main_addtask') }}" method="get">
+            <div class="form-group">
+                <label for="mail" class="col-sm-2 control-label">Новое задание</label>
+                <div class="col-sm-10">
+                    <input type="text" name = "content" class="form-control" id="mail" placeholder="Новое задание">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-success">Добавить</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+{% endblock main_content %}

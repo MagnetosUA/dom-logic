@@ -1,7 +1,7 @@
 {% extends '@Main/base.html.twig' %}
 {% block main_content %}
     <style>
-        a{
+        .menu a{
             color:white;
             font-size: 20px;
         }
@@ -9,7 +9,7 @@
             color:red;
         }
     </style>
-    <div class="col-md-9 text-left">
+    <div class="col-md-9 text-left menu">
         <a href="{{ path('main_addroom') }}" >Добавить комнату</a>
         <hr>
         <a href="{{ path('main_adddevice') }}" >Добавить устройство</a>

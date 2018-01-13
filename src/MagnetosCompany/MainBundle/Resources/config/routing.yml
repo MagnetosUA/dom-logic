@@ -46,3 +46,7 @@ main_widgets:
     path:     /widgets
     defaults: { _controller: MainBundle:Default:widgets}
 
+main_cool:
+    path:     /cool
+    defaults: { _controller: MainBundle:Default:cool}
+

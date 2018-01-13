@@ -71,8 +71,12 @@ class DefaultController extends Controller
         $task = $this->getDoctrine()
             ->getRepository('MainBundle:Task')
             ->findAll();
+        $device = $this->getDoctrine()
+            ->getRepository('MainBundle:Device')
+            ->findAll();
         return $this->render('MainBundle:Default:addroom.html.twig', [
             'task' => $task,
+            'device' => $device,
         ]);
     }
 
@@ -186,22 +190,37 @@ class DefaultController extends Controller
         return $this->redirect('/');
     }
 
-    public function widgetsAction()
+    public function widgetsAction(Request $request)
     {
-        if (){
-            $em = $this->getDoctrine()->getManager();
-            $repository = $em->getRepository('MainBundle:Widget');
+        $request = Request::createFromGlobals();
+        $em = $this->getDoctrine()->getManager();
+        $repository = $em->getRepository('MainBundle:Widget');
+        if ($request->query->get('submit')) {
+            $name = $request->query->get('weather');
+            $widget = $repository->find(1);
+            if ($name == 'on'){
+                $widget->setStatus(1);
+                $em->persist($widget);
+                $em->flush();
+            } else {
+                $widget->setStatus(0);
+                $em->persist($widget);
+                $em->flush();
+            }
         }
+        $widget = $repository->find(1);
         $task = $this->getDoctrine()
             ->getRepository('MainBundle:Task')
             ->findAll();
-        $widget = $this->getDoctrine()
-            ->getRepository('MainBundle:Widget')
-            ->find(1);
         return $this->render('MainBundle:Default:widgets.html.twig', [
             'task' => $task,
             'widget' => $widget,
         ]);
+    }
+
+    public function coolAction()
+    {
+        return $this->render('MainBundle:Default:cool.html.twig');
     }
 
 

@@ -1,0 +1,3 @@
+dispatcher_homepage:
+    path:     /dispatcher
+    defaults: { _controller: DispatcherBundle:Devices:dispatcher }

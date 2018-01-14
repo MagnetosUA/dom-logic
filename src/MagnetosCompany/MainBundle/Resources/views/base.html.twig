@@ -5,6 +5,9 @@
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    {% block individual_style %}
+
+    {% endblock individual_style %}
     <!-- Latest compiled and minified JavaScript -->
     <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
     <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
@@ -30,13 +33,14 @@
                 </div>
             </div>
             <div class="row">
+                {% block top_menu %}
                 <div class="col-md-12 top-menu">
                     <ul>
                         <li>
-                            <a href="#" class="home">Дом</a>
+                            <a href="{{ path('main_home') }}" class="home">Дом</a>
                         </li>
                         <li>
-                            <a href="#" class="rooms">Комнаты</a>
+                            <a href="{{ path('main_rooms') }}" class="rooms">Комнаты</a>
                         </li>
                         <li>
                             <a href="#" class="dispatcher">Диспетчер устройств</a>
@@ -49,6 +53,7 @@
                         </li>
                     </ul>
                 </div>
+                {% endblock top_menu %}
             </div>
         </div>
         <div class="middle_container">
@@ -57,7 +62,9 @@
                     left-menu
                 </div>
                 <div class="col-md-10 main-content">
+                    {% block main_content %}
                     main-content
+                    {% endblock main_content %}
                 </div>
             </div>
         </div>

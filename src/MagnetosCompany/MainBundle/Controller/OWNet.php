@@ -93,7 +93,7 @@ if (!defined('IPPROTO_TCP'))
         define('IPPROTO_TCP',6);
 
 $OWNET_GLOBAL_CACHE_STRUCTURE=array();  // cache value types length read write....
-class Ownet{
+class OWNet{
         protected $link=0;
         protected $host='';
         protected $port=0;

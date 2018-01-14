@@ -1,3 +1,13 @@
 body{
-    color:rebeccapurple;
+    #color:rebeccapurple;
+   # background: url("/../images/fixture.jpg");
+    background: #155703;
+}
+div{
+    border:1px solid ;
+}
+.top-menu ul li{
+    float:left;
+    list-style: none;
+    margin-left:2%;
 }

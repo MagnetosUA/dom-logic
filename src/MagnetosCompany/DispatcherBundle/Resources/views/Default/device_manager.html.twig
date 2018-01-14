@@ -1,0 +1,67 @@
+{% extends '@Main/base.html.twig' %}
+{% block individual_style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/device_manager.css') }}">
+{% endblock individual_style %}
+{% block main_content %}
+    <div class="row">
+        <div class="col-md-10 device_manager ">
+            <div class="row">
+                {% if thing == 'devices' %}
+                <div class="col-md-12">
+                    <div class="row text-center">
+                        <div class="col-md-8">
+                            <a href="{{ path('dispatcher_devices') }}" class="btn  btn-block active">
+                                Устройства
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="{{ path('dispatcher_interfaces') }}" class="btn btn-success btn-block">
+                                Интерфейсы
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <a href="" class="sensors btn btn-primary btn-block">
+                                Сенсоры
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="" class="activators btn btn-primary btn-block">
+                                Активаторы
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% elseif thing == 'interfaces' %}
+                <div class="col-md-12">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <a href="{{ path('dispatcher_devices') }}" class="btn  btn-block active">
+                                Устройства
+                            </a>
+                        </div>
+                        <div class="col-md-8">
+                            <a href="{{ path('dispatcher_interfaces') }}" class="btn btn-success btn-block">
+                                Интерфейсы
+                            </a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <a href="" class="sensors btn btn-primary btn-block">
+                                1 Wire
+                            </a>
+                        </div>
+                        <div class="col-md-4">
+                            <a href="" class="activators btn btn-primary btn-block">
+                                Wi-Fi
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+        </div>
+    </div>
+{% endblock main_content %}

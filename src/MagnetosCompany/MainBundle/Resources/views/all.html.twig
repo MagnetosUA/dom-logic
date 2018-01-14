@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <title>Title</title>
+    <style>
+        body{
+            background: #204d74;
+        }
+        .my-center-block{
+            background: #C9C9C9;
+            margin-left: 25px;
+        }
+        .onoffswitch {
+            position: relative; width: 67px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+        }
+        .onoffswitch-checkbox {
+            display: none;
+        }
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            border: 2px solid #999999; border-radius: 10px;
+        }
+        .onoffswitch-inner {
+            display: block; width: 200%; margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block; float: left; width: 50%; height: 20px; padding: 0; line-height: 20px;
+            font-size: 14px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            box-sizing: border-box;
+        }
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 10px;
+            background-color: #34A7C1; color: #FFFFFF;
+        }
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 10px;
+            background-color: #EEEEEE; color: #999999;
+            text-align: right;
+        }
+        .onoffswitch-switch {
+            display: block; width: 12px; margin: 4px;
+            background: #FFFFFF;
+            position: absolute; top: 0; bottom: 0;
+            right: 43px;
+            border: 2px solid #999999; border-radius: 10px;
+            transition: all 0.3s ease-in 0s;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+        #checkBox{
+            margin-left:15px;
+        }
+        .done{
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="row">
+    <div class="col-md-12">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand glyphicon glyphicon-object-align-left" href="#"></a>
+                </div>
+                <div class="collapse navbar-collapse" id="myNavbar">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="{{ path('main_home') }}" class="glyphicon glyphicon-home"></a></li>
+                        <li><a href="{{ path('main_rooms') }}">Комнаты</a></li>
+                        <li><a href="{{ path('main_devicemanager') }}">Устройства</a></li>
+                        <li><a href="{{ path('main_widgets') }}">Виджеты</a></li>
+                        <li><a href="{{ path('main_settings') }}">Настройки</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn btn-danger btn-md btn-block" data-parent="#collapse-group" href="#el1">Задания</a>
+                        </h4>
+                    </div>
+                    <div id="el1" class="panel-collapse collapse in">
+                        {% block left_menu %}
+                            <div class="panel-body">
+                                <ol>
+                                    <form method="get" action="{{ path('main_deletetask') }}">
+                                        {% for i in task %}
+                                            <li>
+                                                {{ i.getTask() }}<input id="checkBox" name="{{ i.getId }}" type="checkbox">
+                                            </li>
+                                        {% endfor %}
+                                        {% if task==NULL %}
+                                            Нет заданий
+                                        {% endif %}
+                                        {% if task!=NULL %}
+                                            <input type="submit" class="done" name="submit" value="Выполнено"/>
+                                        {% endif %}
+                                    </form>
+                                </ol>
+                            </div>
+                        {% endblock left_menu %}
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn btn-success btn-md btn-block" data-parent="#collapse-group" href="#el2">Главные датчики</a>
+                        </h4>
+                    </div>
+                    <div id="el2" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ol>
+                                <li>sensor 1</li>
+                                <li>sensor 2</li>
+                                <li>sensor 3</li>
+                                <li>sensor 4</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" class="btn btn-warning btn-md btn-block" data-parent="#collapse-group" href="#el3"> Главные устройства</a>
+                        </h4>
+                    </div>
+                    <div id="el3" class="panel-collapse collapse">
+                        <div class="panel-body">
+                            <ul>
+                                <li>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" checked>
+                                        <label class="onoffswitch-label" for="myonoffswitch">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <span>Свет</span>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch1" class="onoffswitch-checkbox" id="myonoffswitch1" checked>
+                                        <label class="onoffswitch-label" for="myonoffswitch1">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch2" checked>
+                                        <label class="onoffswitch-label" for="myonoffswitch2">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </li>
+                                <ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% block main_content %}
+        <div class="col-md-9 my-center-block">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Welcome</h1>
+                    <div class="col-md-10 text-center">
+                        <img class="img-responsive center-block" src="http://realtorcorvello.com/files/2017/02/smart_home_diagram_grey_499x335.png">
+                    </div>
+                    <div class="col-md-2">
+                        {% if widget.getStatus()==1 %}
+                            <div id="meteoprog_informer_standart" data-params="girl:Vinnitsa:200x85:dark:23x22">
+                                <a href="https://www.meteoprog.ua/ru/">погода</a>
+                                <br />
+                                <a href="https://www.meteoprog.ua/ru/weather/Kyiv/">Погода в  Виннице </a>
+                                <br />
+                            </div><script src="https://www.meteoprog.ua/ru/weather/informer/standart.js"></script>
+                        {% endif %}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <marquee>Главные новости ... *** ... Погода ... **** .... Спорт .... ****</marquee>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+        </div>
+
+    {% endblock %}
+</div>
+
+</body>
+</html>

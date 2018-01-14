@@ -1,0 +1,25 @@
+.device_manager{
+    border:2px inset #708090;
+    background: #A825FF;
+}
+.device_manager a:hover{
+    background: #9223e1;
+    text-decoration: none;
+}
+.devices, .interfaces{
+    #display:block;
+    border: solid 1px #D3D3D3;
+    color: #353e09;
+    margin-right: 10px;
+    font-size: 18px;
+    background: #9999FF;
+    padding: 5px;
+    border-radius: 5px;
+}
+.active{
+    background: #A825FF;
+    color:black;
+}
+.bord div{
+    border: 1px solid black;
+}

@@ -3,55 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+    <link rel="stylesheet" href="{{ asset('1assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-theme.min.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('1bundles/main/my_bootstrap_menu.css') }}">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     {% block individual_style %}
 
     {% endblock individual_style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
     <!-- Latest compiled and minified JavaScript -->
-    <script src="{{ asset('assets/js/bootstrap.js') }}"></script>
-    <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
-    <script src="{{ asset('assets/js/jquery-migrate-3.0.0.min.js') }}"></script>
+
     <title>Title</title>
+
 </head>
 <body>
     <div class="wrapper">
         <div class="top_container">
             <div class="row">
-                <div class="col-md-12 header">
-                    <div class="row">
-                        <div class="col-md-2 logo">
-                            logo
-                        </div>
-                        <div class="col-md-8 top-info">
-                            top-info
-                        </div>
-                        <div class="col-md-2 warnings">
-                            warnings
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
                 {% block top_menu %}
-                <div class="col-md-12 top-menu">
-                    <ul>
-                        <li>
-                            <a href="{{ path('main_home') }}" class="home">Дом</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('main_rooms') }}" class="rooms">Комнаты</a>
-                        </li>
-                        <li>
-                            <a href="#" class="dispatcher">Диспетчер устройств</a>
-                        </li>
-                        <li>
-                            <a href="#" class="widgets">Виджеты</a>
-                        </li>
-                        <li>
-                            <a href="#" class="settings">Настройки</a>
-                        </li>
-                    </ul>
+                <div class="col-lg-12 top-menu">
+                    <nav class="navbar navbar-inverse">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <a class="navbar-brand glyphicon glyphicon-object-align-left" href="#"></a>
+                            </div>
+                            <div class="collapse navbar-collapse" id="myNavbar">
+                                <ul class="nav navbar-nav">
+                                    {% block nav_bar %}
+                                        <li class="active"><a href="{{ path('main_home') }}" class="glyphicon glyphicon-home"></a></li>
+                                        <li><a href="{{ path('main_rooms') }}">Комнаты</a></li>
+                                        <li><a href="{{ path('dispatcher_devices') }}">Диспетчер устройств</a></li>
+                                        <li><a href="{{ path('main_widgets') }}">Виджеты</a></li>
+                                        <li><a href="{{ path('main_settings') }}">Настройки</a></li>
+                                    {% endblock nav_bar %}
+                                </ul>
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
                 </div>
                 {% endblock top_menu %}
             </div>
@@ -63,8 +62,33 @@
                 </div>
                 <div class="col-md-10 main-content">
                     {% block main_content %}
-                    main-content
-                    {% endblock main_content %}
+                        <div class="col-md-12 my-center-block">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h1>Welcome</h1>
+                                    <div class="col-md-10 text-center">
+                                        <img class="img-responsive center-block" src="http://realtorcorvello.com/files/2017/02/smart_home_diagram_grey_499x335.png">
+                                    </div>
+                                    <div class="col-md-2">
+                                        {% if widget.getStatus()==1 %}
+                                            <div id="meteoprog_informer_standart" data-params="girl:Vinnitsa:200x85:dark:23x22">
+                                                <a href="https://www.meteoprog.ua/ru/">погода</a>
+                                                <br />
+                                                <a href="https://www.meteoprog.ua/ru/weather/Kyiv/">Погода в  Виннице </a>
+                                                <br />
+                                            </div><script src="https://www.meteoprog.ua/ru/weather/informer/standart.js"></script>
+                                        {% endif %}
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <marquee>Главные новости ... *** ... Погода ... **** .... Спорт .... ****</marquee>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </div>
+                            </div>
+                        </div>
+                    {% endblock %}
                 </div>
             </div>
         </div>

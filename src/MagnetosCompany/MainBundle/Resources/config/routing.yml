@@ -6,10 +6,6 @@ main_rooms:
     path:     /rooms
     defaults: { _controller: MainBundle:Default:rooms }
 
-main_devicemanager:
-    path:     /devicemanager
-    defaults: { _controller: MainBundle:Default:devicemanager }
-
 main_settings:
     path:     /settings
     defaults: { _controller: MainBundle:Default:settings }

@@ -1,3 +1,7 @@
-dispatcher_homepage:
-    path:     /dispatcher
-    defaults: { _controller: DispatcherBundle:Devices:dispatcher }
+dispatcher_devices:
+    path:     /dispatcher/devices
+    defaults: { _controller: DispatcherBundle:Devices:devices }
+
+dispatcher_interfaces:
+    path:     /interfaces/1wire
+    defaults: { _controller: DispatcherBundle:Devices:interfaces }

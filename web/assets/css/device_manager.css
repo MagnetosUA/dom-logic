@@ -1,6 +1,7 @@
 .device_manager{
     border:2px inset #708090;
-    background: #A825FF;
+   # background: #A825FF;
+    font-size: 25px;
 }
 .device_manager a:hover{
     background: #9223e1;
@@ -17,8 +18,16 @@
     border-radius: 5px;
 }
 .active{
-    background: #A825FF;
+    background: #ffffff;
     color:black;
+}
+.level2{
+    margin-top:-4px;
+    background: #ffffff;
+}
+.active2{
+    background: #e1e1e1;
+    //color:black;
 }
 .bord div{
     border: 1px solid black;

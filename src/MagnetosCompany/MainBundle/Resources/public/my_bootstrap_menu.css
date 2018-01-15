@@ -1,4 +1,8 @@
-@media (max-width: 1400px) {
+@media (max-width: 1900px) {
+    .navbar{
+        padding-top:25px;
+        padding-bottom:25px;
+    }
     .navbar-header {
         float: none;
     }

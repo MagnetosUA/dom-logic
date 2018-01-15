@@ -6,62 +6,101 @@
     <div class="row">
         <div class="col-md-10 device_manager ">
             <div class="row">
-                {% if thing == 'devices' %}
                 <div class="col-md-12">
-                    <div class="row text-center">
-                        <div class="col-md-8">
-                            <a href="{{ path('dispatcher_devices') }}" class="btn  btn-block active">
+                    <div class="row">
+                        <div class="col-md-2 {% if thing=='devices' %}active{% endif %}">
+                            <a href="{{ path('dispatcher_devices') }}">
                                 Устройства
                             </a>
                         </div>
-                        <div class="col-md-4">
-                            <a href="{{ path('dispatcher_interfaces') }}" class="btn btn-success btn-block">
+                        <div class="col-md-2">
+                            <a href="{{ path('dispatcher_interfaces') }}" {% if thing=='interfaces' %}class="active"{% endif %}>
                                 Интерфейсы
                             </a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <a href="" class="sensors btn btn-primary btn-block">
-                                Сенсоры
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="" class="activators btn btn-primary btn-block">
-                                Активаторы
-                            </a>
+                    <div class="row level2">
+                        <div class="col-md-12">
+                            {% if thing=='devices' %}
+                            <div class="row">
+                                <div class="col-md-2 {% if sensors is defined %}active2{% endif %}">
+                                    <a href="{{ path('dispatcher_sensors') }}">
+                                        Сенсоры
+                                    </a>
+                                </div>
+                                <div class="col-md-10">
+                                    {% if sensors is defined %}
+                                    <div class="row active2">
+                                        <div class="col-md-12">Temperature sensor</div>
+                                    </div>
+                                    <div class="row active2">
+                                        <div class="col-md-12">Humidity sensor</div>
+                                    </div>
+                                    <div class="row active2">
+                                        <div class="col-md-12">Gas sensor</div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-2 {% if activators is defined %}active2{% endif %}">
+                                    <a href="{{ path('dispatcher_activators') }}" class="">
+                                        Активаторы
+                                    </a>
+                                </div>
+                                <div class="col-md-10">
+                                    {% if activators is defined %}
+                                        <div class="row">
+                                            <div class="col-md-12 active2">Lamp relay</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12 active2">Signal relay</div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            {% endif %}
+
+
+                            <!--Thing interfaces -->
+
+                            {% if thing=='interfaces' %}
+                                <div class="row">
+                                    <div class="col-md-2 {% if onewire is defined %}active2{% endif %}">
+                                        <a href="{{ path('dispatcher_onewire') }}">
+                                            1Wire
+                                        </a>
+                                    </div>
+                                    <div class="col-md-10">
+                                        {% if onewire is defined %}
+                                            <div class="row active2">
+                                                <div class="col-md-12">Temperature sensor1</div>
+                                                <div class="col-md-12">Temperature sensor2</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2 {% if wifi is defined %}active2{% endif %}">
+                                        <a href="{{ path('dispatcher_wifi') }}" class="">
+                                            Wi-Fi
+                                        </a>
+                                    </div>
+                                    <div class="col-md-10">
+                                        {% if wifi is defined %}
+                                            <div class="row">
+                                                <div class="col-md-12 active2">Lamp wifi1</div>
+                                                <div class="col-md-12 active2">Lamp wifi2</div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endif %}
+
                         </div>
                     </div>
                 </div>
-                {% elseif thing == 'interfaces' %}
-                <div class="col-md-12">
-                    <div class="row text-center">
-                        <div class="col-md-4">
-                            <a href="{{ path('dispatcher_devices') }}" class="btn  btn-block active">
-                                Устройства
-                            </a>
-                        </div>
-                        <div class="col-md-8">
-                            <a href="{{ path('dispatcher_interfaces') }}" class="btn btn-success btn-block">
-                                Интерфейсы
-                            </a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4"></div>
-                        <div class="col-md-4">
-                            <a href="" class="sensors btn btn-primary btn-block">
-                                1 Wire
-                            </a>
-                        </div>
-                        <div class="col-md-4">
-                            <a href="" class="activators btn btn-primary btn-block">
-                                Wi-Fi
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock main_content %}

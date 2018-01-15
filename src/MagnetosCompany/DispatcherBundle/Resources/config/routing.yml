@@ -1,7 +1,28 @@
+#devices
+
 dispatcher_devices:
     path:     /dispatcher/devices
     defaults: { _controller: DispatcherBundle:Devices:devices }
 
+dispatcher_sensors:
+    path:     /dispatcher/devices/sensors
+    defaults: { _controller: DispatcherBundle:Devices:sensors }
+
+dispatcher_activators:
+    path:     /dispatcher/devices/activators
+    defaults: { _controller: DispatcherBundle:Devices:activators }
+
+
+#interfaces
+
 dispatcher_interfaces:
-    path:     /interfaces/1wire
+    path:     /interfaces
     defaults: { _controller: DispatcherBundle:Devices:interfaces }
+
+dispatcher_onewire:
+    path:     /interfaces/1wire
+    defaults: { _controller: DispatcherBundle:Devices:onewire }
+
+dispatcher_wifi:
+    path:     /interfaces/wifi
+    defaults: { _controller: DispatcherBundle:Devices:wifi }

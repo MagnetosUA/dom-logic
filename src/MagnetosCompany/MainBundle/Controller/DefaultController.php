@@ -11,6 +11,7 @@ use MagnetosCompany\MainBundle\Entity\Device;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use MagnetosCompany\MainBundle\Form\Type\DeviceType;
 
 class DefaultController extends Controller
 {
@@ -221,6 +222,21 @@ class DefaultController extends Controller
     public function coolAction()
     {
         return $this->render('MainBundle:Default:cool.html.twig');
+    }
+
+    public function registerAction(Request $request)
+    {
+        $form = $this->createForm(DeviceType::class);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            /** @var Device $device */
+            $device = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($device);
+            $em->flush();
+
+            return $this->redirectToRoute('dispatcher_scanning');
+        }
     }
 
 

@@ -19,6 +19,7 @@ class AppKernel extends Kernel
             new MagnetosCompany\MainBundle\MainBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new MagnetosCompany\DispatcherBundle\DispatcherBundle(),
+            new M6Web\Bundle\DaemonBundle\M6WebDaemonBundle()
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

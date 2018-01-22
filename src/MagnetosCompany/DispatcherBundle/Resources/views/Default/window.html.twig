@@ -1,0 +1,14 @@
+<div onclick="show('none')" id="wrap"></div>
+
+    <!-- Само окно-->
+    <div id="window">
+        <!-- Картинка крестика-->
+        <img class="close" onclick="show('none')" src="http://sergey-oganesyan.ru/wp-content/uploads/2014/01/close.png">
+        {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.type, {'value' : type }) }}
+
+        <input id="personal" type="text" name="personalId"  />
+        <button type="submit" class="btn btn-success" formnovalidate>Создать</button>
+        {{ form_end(form) }}
+    </div>

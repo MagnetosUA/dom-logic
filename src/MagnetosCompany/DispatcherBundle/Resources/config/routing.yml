@@ -1,3 +1,9 @@
+#exp
+dispatcher_exp:
+    path:     /exp
+    defaults: { _controller: DispatcherBundle:Devices:exp }
+
+
 #devices
 
 dispatcher_devices:
@@ -26,3 +32,7 @@ dispatcher_onewire:
 dispatcher_wifi:
     path:     /interfaces/wifi
     defaults: { _controller: DispatcherBundle:Devices:wifi }
+
+dispatcher_scanning:
+    path:     /dispatcher/interfaces/scanning
+    defaults: { _controller: DispatcherBundle:Devices:scanning }

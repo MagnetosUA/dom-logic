@@ -1,1 +1,6 @@
 <h3>ownet</h3>
+{% if ow. read("/12.C2F73D000000/PIO.BYTE") == 0 %}
+{{ ow. set("/12.C2F73D000000/PIO.BYTE", 1)}}
+{% else %}
+{{ ow. set("/12.C2F73D000000/PIO.BYTE", 0)}}
+{% endif %}

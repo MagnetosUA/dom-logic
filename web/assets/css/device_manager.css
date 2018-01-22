@@ -18,7 +18,7 @@
     border-radius: 5px;
 }
 .active{
-    background: #ffffff;
+    background: #ff1c15;
     color:black;
 }
 .level2{
@@ -29,6 +29,37 @@
     background: #e1e1e1;
     //color:black;
 }
-.bord div{
-    border: 1px solid black;
+/*       -------------------------#borders -----------------------------------------------*/
+.bord{
+    border: 1px solid #474747;
 }
+.bord-bot{
+    border-bottom: 1px groove #737373;
+}
+.bord-righ{
+    border-right: 1px solid #737373;
+}
+.pad-bot-20{
+    padding-bottom: 20px;
+}
+
+/* ----------------------------------------------#New style------------------------------------------------------ */
+
+.top-level a{
+    //background: #0f0f0f;
+    padding:7px;
+    color: rgba(37, 32, 68, 0.99);
+    //font-size: 100px;
+}
+.scan{
+    background: #a20d7d;
+    color:#afd9ee;
+}
+.scan a{
+    color:#afd9ee;
+}
+.wid80{
+    width:70%;
+    display: inline-block;
+}
+

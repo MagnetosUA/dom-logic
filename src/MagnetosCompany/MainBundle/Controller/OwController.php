@@ -5,30 +5,59 @@ namespace MagnetosCompany\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use MagnetosCompany\MainBundle\Controller\OWNet;
-
-//require_once 'OWNet.php';
-
-
-//print_r($ow->read("/10.E8C1C9000800/temperature"));
-//print_r($ow->presence("/10.E8C1C9000800"));
-//print_r($ow->set("/10.E8C1C9000800/temphigh",35)); // any value will be converted to string by fwrite function or socket_write
+use MagnetosCompany\MainBundle\Entity\Activator;
+use MagnetosCompany\MainBundle\Entity\Sensor;
 
 class OwController extends Controller
 {
     public function owsensorAction()
     {
-        $ow=new OWNet("tcp://127.0.0.1:4304");
-        //echo $ow->getHost();
-        //echo $ow->getTimeout();
-        //var_dump($ow->get("/10.E8C1C9000800/temperature",OWNET_MSG_READ,false));
-        //var_dump($ow);
-        //echo $ow->presence("/28.FFC85AC11604");
-       // OWNet::read( "localhost:4304" , "/10.E8C1C9000800/temperature" );
-        //print_r($ow->read("28.FFC85AC11604/"));
-        //print_r($ow->dir("/28.FFC85AC11604"));
-       // print_r($ow->getUseSwigDir());
+        $em = $this->getDoctrine()->getManager();
+        $ow = new OWNet("tcp://127.0.0.1:4304");
+
+        if ($ow->dir("/")) {
+            $devices = $ow->dir("/");
+        }
+        else return;
+
+        $device = explode(',', $devices['data']);
+        $sensors = [];
+        $activators =[];
+        foreach ($device as $item) {
+            //echo $item."<br>";
+            if (preg_match("/^\/28/",$item)) {
+                $sensors[] = $item;
+                //echo $item."<br>";
+            } elseif (preg_match("/^\/12/",$item)) {
+                $activators[] = $item;
+            }
+        }
+
         //$ow->setTimeout(1);
-        print_r($ow->read("/28.FFC85AC11604/temperature"));
-        return $this->render('MainBundle:Sensors:owsensor.html.twig');
+        //print_r($ow->read("/28.FFC85AC11604/temperature"));
+        //$ow->set("/12.C2F73D000000/PIO.BYTE", 1);
+        for ($i = 0; $i < count($activators); $i++) {
+            $activator = new Activator();
+            $activator->setName('Activator'.$i);
+            $activator->setInterface('1wire');
+            $activator->setStatus('0');
+            $activator->setPersonalId($activators[$i]);
+            $em->persist($activator);
+        }
+
+        for ($i = 0; $i < count($sensors); $i++) {
+            $sensor = new Sensor();
+            $sensor->setName('Sensor'.$i);
+            $sensor->setInterface('1wire');
+            $sensor->setStatus('0');
+            $sensor->setPersonalId($sensors[$i]);
+            $em->persist($sensor);
+        }
+
+        $em->flush();
+
+        return $this->render('MainBundle:Sensors:owsensor.html.twig', [
+            'ow' => $ow,
+        ]);
     }
 }

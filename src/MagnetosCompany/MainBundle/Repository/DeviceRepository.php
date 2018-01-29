@@ -10,4 +10,25 @@ namespace MagnetosCompany\MainBundle\Repository;
  */
 class DeviceRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function findDevices()
+    {
+        $query = $this->createQueryBuilder('d')
+            ->select('d.personalId')
+            ->where('d.type = :type')
+            ->setParameter('type', 'Sensor')
+            ->getQuery();
+
+        return $query;
+    }
+
+    public function findByPersonalId($personalId)
+    {
+        $query = $this->createQueryBuilder('d')
+            ->select('d.status')
+            ->where('d.personalId = :personaId')
+            ->setParameter('personaId', $personalId)
+            ->getQuery();
+
+        return $query;
+    }
 }

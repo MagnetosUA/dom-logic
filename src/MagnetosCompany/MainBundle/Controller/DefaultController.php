@@ -2,7 +2,10 @@
 
 namespace MagnetosCompany\MainBundle\Controller;
 
+use MagnetosCompany\MainBundle\Entity\Setting;
 use MagnetosCompany\MainBundle\Entity\Task;
+use MagnetosCompany\MainBundle\Form\Type\OnOffType;
+use MagnetosCompany\MainBundle\Form\Type\SettingsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,17 +32,47 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function roomsAction()
+    public function roomsAction(Request $request)
     {
+        $form = $this->createForm(OnOffType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            /** @var Device $device */
+            $device = $form->getData();
+            if ($device->getStatus() == '0') {
+                $device->setStatus('1');
+            } else {
+                $device->setStatus('0');
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($device);
+            $em->flush();
+
+            return $this->redirectToRoute('dispatcher_scanning');
+        }
+
         $room = $this->getDoctrine()
             ->getRepository('MainBundle:Room')
             ->findAll();
         $task = $this->getDoctrine()
             ->getRepository('MainBundle:Task')
             ->findAll();
+        $sensorValue = $this->getDoctrine()
+            ->getRepository('MainBundle:SensorValue')
+            ->getByLastId()->getResult();
+        $deviceStatus = $this->getDoctrine()
+            ->getRepository('MainBundle:Device')
+            ->findByPersonalId('/28.FFC85AC11604')->getResult();
+        foreach ($deviceStatus as $status) {
+            $deviceStatus = ($status['status']);
+        }
+
         return $this->render('MainBundle:Default:rooms.html.twig', [
+            'form' => $form->createView(),
+            'device_status' => $deviceStatus,
             'room' =>  $room,
             'task' => $task,
+            'sensor_value' => $sensorValue,
         ]);
     }
 
@@ -237,6 +270,33 @@ class DefaultController extends Controller
 
             return $this->redirectToRoute('dispatcher_scanning');
         }
+    }
+
+    public function setscanAction(Request $request)
+    {
+        $setting = $this->getDoctrine()->getRepository(Setting::class)->find(1);
+        $form = $this->createForm(SettingsType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var Device $device */
+            $settings = $form->getData();
+            $status = $settings->getStatus();
+            $time = $settings->getTime();
+            $em = $this->getDoctrine()->getManager();
+            //$em->remove($setting);
+            $setting->setStatus($status);
+            $setting->setTime($time);
+            //$em->persist($setting);
+            $em->flush();
+        }
+
+        $settings = $this->getDoctrine()
+            ->getRepository('MainBundle:Setting')
+            ->findAll();
+        return $this->render('MainBundle:Default:setscan.html.twig', [
+            'settings' => $settings,
+            'form' => $form->createView(),
+        ]);
     }
 
 

@@ -11,6 +11,8 @@ use MagnetosCompany\MainBundle\Entity\Sensor;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Debug\Exception\ContextErrorException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class DevicesController extends Controller
 {
@@ -187,6 +189,10 @@ class DevicesController extends Controller
 
     public function expAction()
     {
+        $process = new Process('something-with-variable-runtime');
+        $process->setTimeout(3600);
+        $process->setIdleTimeout(60);
+        $process->run();
         return $this->render('@Dispatcher/Default/exp.html.twig');
     }
 }

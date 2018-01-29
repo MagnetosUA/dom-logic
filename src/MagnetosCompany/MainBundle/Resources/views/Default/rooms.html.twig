@@ -1,6 +1,7 @@
 {% extends '@Main/base.html.twig' %}
 {% block individual_style %}
     <link rel="stylesheet" href="{{ asset('assets/css/button.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 {% endblock individual_style %}
 {% block nav_bar %}
     <li><a href="{{ path('main_home') }}" class="glyphicon glyphicon-home"></a></li>
@@ -10,27 +11,65 @@
     <li><a href="{{ path('main_settings') }}">Настройки</a></li>
 {% endblock nav_bar %}
 {% block main_content %}
+    {% set status = '1' %}
+<script>
+    function onOff (){
+         location.reload();
+    }
+    function funcBefore () {
+        $("#info").text ("Waiting for data ...");
+    }
+    function funcSuccess (data) {
+        $("#info").text (data);
+    }
 
+    function sendPost() {
+        $.ajax ({
+            url: "{{ path('main_set_activator') }}",
+            type: "POST",
+            data: {"status" : "{{ device_status }}", "ask" : "1"},
+            dataType: "html",
+            beforeSend: funcBefore,
+            success: funcSuccess
+        })
+    }
+</script>
     <div class="col-md-9 text-left">
         <div class="row">
+
+            <div id="result">Тут будет ответ от сервера</div><br /><br />
+            <div id="info"></div><br /><br />
+            <div onclick="sendPost();">Отправить POST запрос через Ajax</div><br />
+
             {% for i in room %}
-                <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail">
+                <h1>{{ device_status }}</h1>
+                <div class="col-md-4 ">
+                    <div class="thumbnail room">
                         <h4>{{ i.getName() }}</h4>
                         <img class="img-roundedl" style="max-height:210px;" src='{{ i.getLinkToImage() }}' alt="...">
                         <p> {{ i.getSensor() }} </p>
                         <div class="can-toggle">
-                            <input id="{{ i.getName() }}" type="checkbox">
+
+                            <input id="{{ i.getName() }}" type="checkbox" onclick="sendPost()" {% if device_status == '1' %}checked{% endif %} >
                             <label for="{{ i.getName() }}">
-                                <div class="can-toggle__switch" data-checked="On" data-unchecked="Off"></div>
+
+
+
+                                <div class="can-toggle__switch" data-checked="Вкл"  data-unchecked="Выкл"></div>
                                 <div class="can-toggle__label-text">{{ i.getDevice() }}</div>
                             </label>
+
                         </div>
                         <div class="caption">
                             <button class="btn btn-danger glyphicon glyphicon-off"></button>
                             <button class="btn btn-success glyphicon glyphicon-thumbs-up"></button>
                             <button class="btn btn-warning glyphicon glyphicon glyphicon-flash"></button>
                             <button class="btn btn-primary glyphicon glyphicon glyphicon glyphicon-certificate"></button>
+                            <p>
+                                {% for value in sensor_value %}
+                                Температура : {{ value.reading }}
+                                {% endfor %}
+                            </p>
                         </div>
                     </div>
                 </div>

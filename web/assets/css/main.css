@@ -5,3 +5,7 @@ body{
 a{
     list-style: none;
 }
+.room{
+    height: 500px;
+    border: 1px dashed brown;
+}

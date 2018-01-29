@@ -42,7 +42,17 @@ main_widgets:
     path:     /widgets
     defaults: { _controller: MainBundle:Default:widgets}
 
-main_cool:
-    path:     /cool
-    defaults: { _controller: MainBundle:Default:cool}
+main_start:
+    path:     /start
+    defaults: { _controller: MainBundle:Daemon:start}
+
+main_setscan:
+    path:     /setscan
+    defaults: { _controller: MainBundle:Default:setscan}
+
+main_set_activator:
+    path:     /set_activator
+    defaults: { _controller: MainBundle:Ajax:setActivator}
+
+
 

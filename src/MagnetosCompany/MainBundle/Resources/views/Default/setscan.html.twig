@@ -1,0 +1,29 @@
+{% extends '@Main/base.html.twig' %}
+{% block main_content %}
+    <style>
+        .menu a{
+            color:white;
+            font-size: 20px;
+        }
+        a:hover{
+            color:red;
+        }
+    </style>
+
+    <div class="col-md-2 text-left menu">
+        {% for setting in settings %}
+            Статус сканирования: {{ setting.status }}
+            <br/>
+            Время опроса: {{ setting.time }}
+        {% endfor %}
+
+        <div class="form-group">
+            {{ form_start(form) }}
+            {{ form_row(form.status, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.time, {'attr': {'class': 'form-control'}}) }}
+            <button type="submit" class="btn btn-success" formnovalidate>Создать</button>
+            {{ form_end(form) }}
+        </div>
+
+    </div>
+{% endblock main_content %}

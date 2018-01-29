@@ -24,11 +24,11 @@
         "symfony/assetic-bundle": "^2.8",
         "symfony/monolog-bundle": "^3.1.0",
         "symfony/polyfill-apcu": "^1.0",
+        "symfony/process": "^3.4",
         "symfony/swiftmailer-bundle": "^2.3.10",
         "symfony/symfony": "3.3.*",
         "twbs/bootstrap": "^3.3",
-        "twig/twig": "^1.0||^2.0",
-        "m6web/daemon-bundle":"^3.0"
+        "twig/twig": "^1.0||^2.0"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

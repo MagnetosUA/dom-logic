@@ -49,7 +49,6 @@ class Device
      */
     private $status;
 
-
     /**
      * Get id
      *

@@ -31,4 +31,43 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
 
         return $query;
     }
+
+    public function findSensors()
+    {
+        $query = $this->createQueryBuilder('d')
+            ->where('d.type = :type and d.interface = :interface')
+            ->setParameters([
+                'type' => 'Sensor',
+                'interface' => '1-Wire',
+            ])
+            ->getQuery();
+
+        return $query;
+    }
+
+    public function findActivators()
+    {
+        $query = $this->createQueryBuilder('d')
+            ->where('d.type = :type and d.interface = :interface')
+            ->setParameters([
+                'type' => 'Activator',
+                'interface' => '1-Wire',
+            ])
+            ->getQuery();
+
+        return $query;
+    }
+
+    public function findOnewires()
+    {
+        $query = $this->createQueryBuilder('d')
+            ->select('d.name')
+            ->where('d.interface = :interface')
+            ->setParameters([
+                'interface' => '1-Wire',
+            ])
+            ->getQuery();
+
+        return $query;
+    }
 }

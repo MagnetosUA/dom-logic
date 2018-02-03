@@ -1,56 +1,21 @@
 {% extends '@Main/base.html.twig' %}
 {% block individual_style %}
     <link rel="stylesheet" href="{{ asset('assets/css/device_manager.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pop-up-window.css') }}">
 {% endblock individual_style %}
 
 {% block main_content %}
-<style type="text/css">
 
-	#wrap{
-		display: none;
-		opacity: 0.8;
-		position: fixed;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		padding: 16px;
-		background-color: rgba(1, 1, 1, 0.725);
-		z-index: 100;
-		overflow: auto;
-	}
-
-	#window{
-		width: 400px;
-		height: 400px;
-		margin: 50px auto;
-		display: none;
-		background: #fff;
-		z-index: 200;
-		position: fixed;
-		left: 0;
-		right: 0;
-		top: 0;
-		bottom: 0;
-		padding: 16px;
-	}
-
-	.close{
-		margin-left: 364px;
-		margin-top: 4px;
-		cursor: pointer;
-	}
-
-</style>
 {% if scanning is defined %}
     <script type="text/javascript">
 
         //Функция показа
-        function show(state, device, type){
+        function show(state, device, type, inter_face){
             document.getElementById('window').style.display = state;
             document.getElementById('wrap').style.display = state;
             document.getElementById('main_bundle_device_form_personalId').value = device;
             document.getElementById('main_bundle_device_form_type').value = type;
+            document.getElementById('main_bundle_device_form_interface').value = inter_face;
         }
 
     </script>
@@ -64,6 +29,7 @@
             {{ form_start(form) }}
             {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
             {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
+            {{ form_row(form.interface, {'attr': {'class': 'form-control'}}) }}
             {{ form_row(form.personalId, {'attr': {'class': 'form-control'}}) }}
             <button type="submit" class="btn btn-success" formnovalidate>Создать</button>
             {{ form_end(form) }}
@@ -106,20 +72,20 @@
                     <div class="col-md-8 bord">
                         <ol>
                             {% if sensors is defined %}
-                                {% for i in range(1,10) %}
+                                {% for sensor in sensors %}
                                 <li>
-                                    <a href="#">
-                                        Temperature sensor {{ i }}
+                                    <a href="{{ path('dispatcher_device_widget', {'deviceId' : sensor.id}) }}">
+                                        {{ sensor.name }}
                                     </a>
                                 </li>
                                 {% endfor %}
                             {% endif %}
 
                             {% if activators is defined %}
-                                {% for i in range(1,5) %}
+                                {% for activator in activators %}
                                     <li>
-                                        <a href="#">
-                                            Activator {{ i }}
+                                        <a href="{{ path('dispatcher_device_widget', {'deviceId' : activator.id}) }}">
+                                            {{ activator.name }}
                                         </a>
                                     </li>
                                 {% endfor %}
@@ -148,6 +114,13 @@
                     <div class="col-md-6 bord">
                         <ol>
                             {% if onewire is defined %}
+                                {% for onew in onewire %}
+                                    <li>
+                                        <a href="#" class="wid80">
+                                            {{ onew.name }}
+                                        </a>
+                                    </li>
+                                {% endfor %}
                                 {% if scanning is defined %}
                                     {% if activators is defined %}
                                         {% for activator in activators %}
@@ -155,7 +128,7 @@
                                                 <a href="#" class="wid80">
                                                     {{ activator }}
                                                 </a>
-                                                <button  onclick="show('block', '{{ activator }}', 'Activator')" class="align-right myButton">Добавить</button>
+                                                <button  onclick="show('block', '{{ activator }}', 'Activator', '1-Wire')" class="align-right myButton">Добавить</button>
                                             </li>
                                         {% endfor %}
                                     {% endif %}
@@ -167,7 +140,7 @@
                                                     {{ sensor }}
                                                 </a>
                                                 {% set type = sensor %}
-                                                <button  onclick="show('block', '{{ sensor }}', 'Sensor')" class="align-right myButton">Добавить</button>
+                                                <button  onclick="show('block', '{{ sensor }}', 'Sensor', '1-Wire')" class="align-right myButton">Добавить</button>
                                             </li>
                                         {% endfor %}
                                     {% endif %}

@@ -1,0 +1,17 @@
+.device-widget-block{
+    border-radius: 5px;
+    border: 2px outset gainsboro;
+    background: #99CC66;
+}
+
+.device-widget-block .row{
+    #border-radius: 5px;
+    border: 2px outset gainsboro;
+    background: #99CCBB;
+    color: #424c52;
+}
+
+.device-widget-block .row .col-md-4{
+    font-weight: bold;
+
+}

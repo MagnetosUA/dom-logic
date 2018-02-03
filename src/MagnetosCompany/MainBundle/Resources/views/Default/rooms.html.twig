@@ -1,7 +1,7 @@
 {% extends '@Main/base.html.twig' %}
 {% block individual_style %}
     <link rel="stylesheet" href="{{ asset('assets/css/button.css') }}">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="{{ asset('assets/css/room.css') }}">
 {% endblock individual_style %}
 {% block nav_bar %}
     <li><a href="{{ path('main_home') }}" class="glyphicon glyphicon-home"></a></li>
@@ -11,70 +11,49 @@
     <li><a href="{{ path('main_settings') }}">Настройки</a></li>
 {% endblock nav_bar %}
 {% block main_content %}
-    {% set status = '1' %}
+
 <script>
-    function onOff (){
-         location.reload();
-    }
-    function funcBefore () {
-        $("#info").text ("Waiting for data ...");
-    }
-    function funcSuccess (data) {
-        $("#info").text (data);
-    }
 
     function sendPost() {
         $.ajax ({
             url: "{{ path('main_set_activator') }}",
             type: "POST",
-            data: {"status" : "{{ device_status }}", "ask" : "1"},
-            dataType: "html",
-            beforeSend: funcBefore,
-            success: funcSuccess
+            data: {"ask" : "1"},
         })
     }
 </script>
     <div class="col-md-9 text-left">
         <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    {% for i in room %}
+                        <div class="col-md-3 room">
 
-            <div id="result">Тут будет ответ от сервера</div><br /><br />
-            <div id="info"></div><br /><br />
-            <div onclick="sendPost();">Отправить POST запрос через Ajax</div><br />
+                            <h4>{{ i.getName() }}</h4>
+                            <img  src='{{ asset(i.linkToImage) }}' alt="...">
 
-            {% for i in room %}
-                <h1>{{ device_status }}</h1>
-                <div class="col-md-4 ">
-                    <div class="thumbnail room">
-                        <h4>{{ i.getName() }}</h4>
-                        <img class="img-roundedl" style="max-height:210px;" src='{{ i.getLinkToImage() }}' alt="...">
-                        <p> {{ i.getSensor() }} </p>
-                        <div class="can-toggle">
-
-                            <input id="{{ i.getName() }}" type="checkbox" onclick="sendPost()" {% if device_status == '1' %}checked{% endif %} >
-                            <label for="{{ i.getName() }}">
-
-
-
-                                <div class="can-toggle__switch" data-checked="Вкл"  data-unchecked="Выкл"></div>
-                                <div class="can-toggle__label-text">{{ i.getDevice() }}</div>
-                            </label>
-
-                        </div>
-                        <div class="caption">
-                            <button class="btn btn-danger glyphicon glyphicon-off"></button>
-                            <button class="btn btn-success glyphicon glyphicon-thumbs-up"></button>
-                            <button class="btn btn-warning glyphicon glyphicon glyphicon-flash"></button>
-                            <button class="btn btn-primary glyphicon glyphicon glyphicon glyphicon-certificate"></button>
-                            <p>
+                            <p class="temperature">
                                 {% for value in sensor_value %}
-                                Температура : {{ value.reading }}
+                                   Температура : {{ value.reading }} &deg;С
                                 {% endfor %}
                             </p>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
+                            <p class="humidity">
+                                Влажность 60 %
+                            </p>
+                            {% if i.sensor == 'Temperature1' %}
+                            <div class="can-toggle">
+                                <input id="{{ i.getName() }}" type="checkbox" onclick="sendPost()" {% if device_status == '1' %}checked{% endif %} >
+                                <label for="{{ i.getName() }}">
+                                    <div class="can-toggle__switch" data-checked="Вкл"  data-unchecked="Выкл"></div>
+                                    <div class="can-toggle__label-text">Свет</div>
+                                </label>
+                            </div>
+                            {% endif %}
 
+                            </div>
+                        {% endfor %}
+                </div>
+            </div>
         </div>
     </div>
 {% endblock main_content %}

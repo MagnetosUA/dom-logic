@@ -10,5 +10,5 @@ namespace MagnetosCompany\MainBundle\Repository;
  */
 class SensorRepository extends \Doctrine\ORM\EntityRepository
 {
-
+    
 }

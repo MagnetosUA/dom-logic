@@ -1,6 +1,6 @@
 body{
     background: #bcd29a;
-    font-size: 25px;
+    font-size: 20px;
 }
 a{
     list-style: none;
@@ -8,4 +8,7 @@ a{
 .room{
     height: 500px;
     border: 1px dashed brown;
+}
+.bottom_container{
+    text-align: center;
 }

@@ -277,7 +277,7 @@ class DefaultController extends Controller
         $setting = $this->getDoctrine()->getRepository(Setting::class)->find(1);
         $form = $this->createForm(SettingsType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             /** @var Device $device */
             $settings = $form->getData();
             $status = $settings->getStatus();

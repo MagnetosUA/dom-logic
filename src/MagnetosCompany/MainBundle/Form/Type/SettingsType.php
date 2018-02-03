@@ -29,6 +29,6 @@ class SettingsType extends AbstractType
 
     public function getBlockPrefix()
     {
-        return 'main_bundle_device_form';
+        return 'main_bundle_setting_form';
     }
 }

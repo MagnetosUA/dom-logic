@@ -12,6 +12,7 @@
                 <label for="pass" class="col-sm-2 control-label">Датчик</label>
                 <div class="col-sm-10">
                 <select name="sensor">
+                    <option>Виртуальное устройство</option>
                     {% for dev in device %}
                     <option>{{ dev.getName() }}</option>
                     {% endfor %}
@@ -23,6 +24,7 @@
                 <label for="pass" class="col-sm-2 control-label">Управляемое устройство</label>
                 <div class="col-sm-10">
                     <select name="device">
+                        <option>Виртуальное устройство</option>
                         {% for dev in device %}
                             <option>{{ dev.getName() }}</option>
                         {% endfor %}

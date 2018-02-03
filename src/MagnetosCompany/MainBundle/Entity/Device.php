@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Device
  *
- * @ORM\Table(name="device")
+ * @ORM\Table(name="devices")
  * @ORM\Entity(repositoryClass="MagnetosCompany\MainBundle\Repository\DeviceRepository")
  */
 class Device
@@ -34,6 +34,13 @@ class Device
      * @ORM\Column(name="type", type="string", length=255)
      */
     private $type;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="interface", type="string", length=255)
+     */
+    private $interface;
 
     /**
      * @var string
@@ -105,6 +112,22 @@ class Device
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * @return string
+     */
+    public function getInterface()
+    {
+        return $this->interface;
+    }
+
+    /**
+     * @param string $interface
+     */
+    public function setInterface($interface)
+    {
+        $this->interface = $interface;
     }
 
     /**

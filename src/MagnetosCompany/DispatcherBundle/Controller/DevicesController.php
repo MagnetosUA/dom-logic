@@ -5,6 +5,7 @@ namespace MagnetosCompany\DispatcherBundle\Controller;
 use MagnetosCompany\MainBundle\Controller\OWNet;
 use MagnetosCompany\MainBundle\Entity\Device;
 use MagnetosCompany\MainBundle\Form\Type\DeviceType;
+use MagnetosCompany\MainBundle\Form\Type\RedactorDeviceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use MagnetosCompany\MainBundle\Entity\Activator;
 use MagnetosCompany\MainBundle\Entity\Sensor;
@@ -27,17 +28,19 @@ class DevicesController extends Controller
 
     public function sensorsAction()
     {
+        $sensors = $this->getDoctrine()->getRepository(Device::class)->findSensors()->getResult();
         return $this->render('@Dispatcher/Default/device_manager.html.twig', [
             'thing' => 'devices',
-            'sensors' => true,
+            'sensors' => $sensors,
         ]);
     }
 
     public function activatorsAction()
     {
+        $activators = $this->getDoctrine()->getRepository(Device::class)->findActivators()->getResult();
         return $this->render('@Dispatcher/Default/device_manager.html.twig', [
             'thing' => 'devices',
-            'activators' => true,
+            'activators' => $activators,
         ]);
     }
 
@@ -52,6 +55,7 @@ class DevicesController extends Controller
 
     public function onewireAction()
     {
+        $onewire = $this->getDoctrine()->getRepository(Device::class)->findOnewires()->getResult();
         $em = $this->getDoctrine()->getManager();
         $sensors = $this->getDoctrine()
             ->getRepository('MainBundle:Sensor')
@@ -63,7 +67,7 @@ class DevicesController extends Controller
 
         return $this->render('@Dispatcher/Default/device_manager.html.twig', [
             'thing' => 'interfaces',
-            'onewire' => true,
+            'onewire' => $onewire,
             'sensors' => $sensors,
             'activators' => $activators,
         ]);
@@ -80,28 +84,21 @@ class DevicesController extends Controller
 
     public function scanningAction(Request $request)
     {
-        //$em = $this->getDoctrine()->getManager();
-//$ow = new OWNet("tcp://127.0.0.1:4304");
-           //$devices = $ow->dir("/");
-           //print_r($devices);
         $form = $this->createForm(DeviceType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isValid()) {
             /** @var Device $device */
             $device = $form->getData();
             $device->setStatus('1');
             $em = $this->getDoctrine()->getManager();
             $em->persist($device);
             $em->flush();
-
-            print_r($device);
-            //return $this->redirectToRoute('dispatcher_scanning');
         }
 
         try {
            $ow = new OWNet("tcp://127.0.0.1:4304");
            $devices = $ow->dir("/");
-           //print_r($devices);
+           $device = explode(',', $devices['data']);
         } catch (\ErrorException $e) {
             return $this->render('@Dispatcher/Default/device_manager.html.twig', [
                 'thing' => 'interfaces',
@@ -112,70 +109,16 @@ class DevicesController extends Controller
         ]);
         }
 
-//        $sensors = $this->getDoctrine()
-//            ->getRepository('MainBundle:Sensor')
-//            ->findAll();
-//
-//        $activators = $this->getDoctrine()
-//            ->getRepository('MainBundle:Activator')
-//            ->findAll();
-//
-//        for ($i = 0; $i < count($sensors); $i++) {
-//            $em->remove($sensors[$i]);
-//        }
-//        for ($i = 0; $i < count($activators); $i++) {
-//            $em->remove($activators[$i]);
-//        }
-//
-//        $em->flush();
 
-
-
-
-        $device = explode(',', $devices['data']);
         $sensors = [];
         $activators =[];
         foreach ($device as $item) {
             if (preg_match("/^\/28/",$item)) {
                 $sensors[] = $item;
-                //echo $item;
             } elseif (preg_match("/^\/12/",$item)) {
                 $activators[] = $item;
             }
         }
-
-
-        //$ow->setTimeout(1);
-        //print_r($ow->read("/28.FFC85AC11604/temperature"));
-        //$ow->set("/12.C2F73D000000/PIO.BYTE", 1);
-
-
-//        for ($i = 0; $i < count($activators); $i++) {
-//            $activator = new Activator();
-//            $activator->setName('Activator'.$i);
-//            $activator->setInterface('1wire');
-//            $activator->setStatus('0');
-//            $activator->setPersonalId($activators[$i]);
-//            $em->persist($activator);
-//        }
-//
-//        for ($i = 0; $i < count($sensors); $i++) {
-//            $sensor = new Sensor();
-//            $sensor->setName('Sensor'.$i);
-//            $sensor->setInterface('1wire');
-//            $sensor->setStatus('0');
-//            $sensor->setPersonalId($sensors[$i]);
-//            $em->persist($sensor);
-//        }
-//        $em->flush();
-//
-//        $sensors = $this->getDoctrine()
-//            ->getRepository('MainBundle:Sensor')
-//            ->findAll();
-//
-//        $activators = $this->getDoctrine()
-//            ->getRepository('MainBundle:Activator')
-//            ->findAll();
 
         return $this->render('@Dispatcher/Default/device_manager.html.twig', [
             'thing' => 'interfaces',
@@ -185,6 +128,34 @@ class DevicesController extends Controller
             'activators' => $activators,
             'form' => $form->createView(),
         ]);
+    }
+
+    public function deviceWidgetAction(Request $request, $deviceId)
+    {
+        $device = $this->getDoctrine()->getRepository(Device::class)->find($deviceId);
+        $form = $this->createForm(RedactorDeviceType::class);
+        $form->handleRequest($request);
+        if ($form->isValid()) {
+            /** @var Device $device */
+            $new_device = $form->getData();
+            $device->setName($new_device->getName());
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($device);
+            $em->flush();
+        }
+        return $this->render('@Dispatcher/Default/device_widget.html.twig', [
+            'device' => $device,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    public function deviceDeleteAction($deviceId)
+    {
+        $device = $this->getDoctrine()->getRepository(Device::class)->find($deviceId);
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($device);
+        $em->flush();
+        return $this->redirectToRoute('dispatcher_devices');
     }
 
     public function expAction()

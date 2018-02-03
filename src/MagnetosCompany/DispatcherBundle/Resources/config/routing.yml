@@ -18,6 +18,14 @@ dispatcher_activators:
     path:     /dispatcher/devices/activators
     defaults: { _controller: DispatcherBundle:Devices:activators }
 
+dispatcher_device_widget:
+    path:     /dispatcher/device_widget/{deviceId}
+    defaults: { _controller: DispatcherBundle:Devices:deviceWidget }
+
+dispatcher_device_delete:
+    path:     /dispatcher/device_delete/{deviceId}
+    defaults: { _controller: DispatcherBundle:Devices:deviceDelete }
+
 
 #interfaces
 

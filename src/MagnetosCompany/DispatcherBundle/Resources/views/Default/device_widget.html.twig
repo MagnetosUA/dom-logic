@@ -1,0 +1,65 @@
+{% extends '@Main/base.html.twig' %}
+{% block individual_style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/device-widget-block.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/pop-up-window.css') }}">
+{% endblock individual_style %}
+
+{% block main_content %}
+    <script type="text/javascript">
+
+        //Функция показа
+        function show(state, name) {
+            document.getElementById('window').style.display = state;
+            document.getElementById('wrap').style.display = state;
+            document.getElementById('main_bundle_redactor_device_form_name').value = name;
+        }
+
+        function deleteDevice(id) {
+            if(confirm('Вы действительно хотите удалить устройство ?')){
+                window.location.href = '{{ path('dispatcher_device_delete',{'deviceId' : device.id }) }}'
+            }
+        }
+
+    </script>
+    <div onclick="show('none')" id="wrap"></div>
+
+    <!-- Само окно-->
+    <div id="window">
+        <!-- Картинка крестика-->
+        <img class="close" onclick="show('none')" src="http://sergey-oganesyan.ru/wp-content/uploads/2014/01/close.png">
+        <div class="form-group">
+            <p>Введите новое имя</p>
+            {{ form_start(form) }}
+            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+            <button type="submit" class="btn btn-success" formnovalidate>Сохранить</button>
+            {{ form_end(form) }}
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="row device-widget-block">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-4">Название</div>
+                    <div class="col-md-8">{{ device.name }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Тип устройства</div>
+                    <div class="col-md-8">{{ device.type }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Тип интерфейса</div>
+                    <div class="col-md-8">{{ device.interface }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">Персональный ID</div>
+                    <div class="col-md-8">{{ device.personalId }}</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <button type="button" onclick="show('block', '{{ device.name }}')" class="btn btn-primary">Редактировать</button>
+                <button type="button" onclick="deleteDevice('{{ device.id }}')" class="btn btn-danger">Удалить</button>
+            </div>
+        </div>
+    </div>
+{% endblock main_content %}

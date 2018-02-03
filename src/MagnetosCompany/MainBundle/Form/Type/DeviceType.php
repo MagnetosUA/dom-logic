@@ -15,6 +15,7 @@ class DeviceType extends AbstractType
         $builder
             ->add('name', TextType::class)
             ->add('type', TextType::class)
+            ->add('interface', TextType::class)
             ->add('personalId', TextType::class);
     }
 

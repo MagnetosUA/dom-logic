@@ -22,13 +22,13 @@ main_owserver:
     path:     /owserver
     defaults: { _controller: MainBundle:Ow:owsensor }
 
-main_adddevice:
-    path:     /settings/adddevice
-    defaults: { _controller: MainBundle:Default:adddevice }
+main_addDevice:
+    path:     /settings/add_device
+    defaults: { _controller: MainBundle:Default:addDevice }
 
-main_successdevice:
-    path:     /settings/successdevice
-    defaults: { _controller: MainBundle:Default:succesdevice}
+main_success_device:
+    path:     /settings/success_device
+    defaults: { _controller: MainBundle:Default:succesDevice}
 
 main_addtask:
     path:     /settings/addtask

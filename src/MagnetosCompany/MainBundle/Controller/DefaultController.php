@@ -4,6 +4,7 @@ namespace MagnetosCompany\MainBundle\Controller;
 
 use MagnetosCompany\MainBundle\Entity\Setting;
 use MagnetosCompany\MainBundle\Entity\Task;
+use MagnetosCompany\MainBundle\Form\Type\AddDeviceType;
 use MagnetosCompany\MainBundle\Form\Type\OnOffType;
 use MagnetosCompany\MainBundle\Form\Type\SettingsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -139,38 +140,27 @@ class DefaultController extends Controller
         ]);
     }
 
-    public function adddeviceAction()
+    public function addDeviceAction(Request $request)
     {
-        $task = $this->getDoctrine()
-            ->getRepository('MainBundle:Task')
-            ->findAll();
-        return $this->render('MainBundle:Default:adddevice.html.twig', [
-            'task' => $task,
-        ]);
-    }
-
-    public function succesdeviceAction(Request $request)
-    {
-        $task = $this->getDoctrine()
-            ->getRepository('MainBundle:Task')
-            ->findAll();
-        $request = Request::createFromGlobals();
-        $name = $request->query->get('name');
-        $type = $request->query->get('type');
-        $personalId = $request->query->get('personal_id');
-        $status = $request->query->get('status');
-        $device = new Device();
-        $device->setName($name);
-        $device->setType($type);
-        $device->setPersonalId($personalId);
-        $device->setStatus($status);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($device);
-        $em->flush();
-        return $this->render('MainBundle:Default:success.html.twig', [
-            'thing' => 'device',
-            'name' => $name,
-            'task' => $task,
+        $form = $this->createForm(AddDeviceType::class);
+        $form->handleRequest($request);
+        $name = 'unknown device';
+        if ($form->isValid()) {
+            /** @var Device $device */
+            $device = $form->getData();
+            $device->setPersonalId('AASS');
+            $device->setStatus(1);
+            $name = $device->getName();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($device);
+            $em->flush();
+            return $this->render('MainBundle:Default:success.html.twig', [
+                'thing' => 'device',
+                'name' => $name,
+            ]);
+        }
+        return $this->render('@Main/Default/add_device.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 

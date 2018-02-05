@@ -20,6 +20,7 @@ a{
     list-style: none;
     background-color: rgba(201, 76, 76, 0.2);
     border-radius: 5px;
+    margin-top:-28px;
 }
 .left-menu ul li a{
     text-decoration: none;

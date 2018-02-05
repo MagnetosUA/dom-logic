@@ -15,3 +15,28 @@ a{
 .bottom_container{
     text-align: center;
 }
+/*left-menu styles start*/
+.left-menu ul{
+    list-style: none;
+    background-color: rgba(201, 76, 76, 0.2);
+    border-radius: 5px;
+}
+.left-menu ul li a{
+    text-decoration: none;
+    margin-top:10px;
+    color:white;
+}
+.left-menu ul li {
+    padding-bottom:15px;
+}
+.left-menu a:hover{
+    color:#afd9ee;
+}
+.left-menu ul li:hover{
+    background: #44396c;
+}
+.left-menu ul li span{
+    margin: 16px 11px 0 0 ;
+    color: white;
+}
+/*left-menu styles end*/

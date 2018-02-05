@@ -29,7 +29,7 @@
                     {% for i in room %}
                         <div class="col-md-3 room">
 
-                            <h4>{{ i.getName() }}</h4>
+                            <a href="{{ path('main_room', {'roomId' : i.id}) }}" <h4>{{ i.getName() }}</h4>
                             <img  src='{{ asset(i.linkToImage) }}' alt="...">
 
                             <p class="temperature">

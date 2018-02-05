@@ -1,0 +1,282 @@
+{% extends '@Main/base.html.twig' %}
+{% block individual_style %}
+    <link rel="stylesheet" href="{{ asset('assets/css/button.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/room.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/clock-style.css') }}">
+    <script href="{{ asset('assets/js/clock-script.js') }}"></script>
+
+    <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
+    <style>
+        .ui-tabs-anchor {
+            outline: none;
+        }
+    </style>
+    <script>
+        function getRandomArbitary(min, max)
+        {
+            return Math.random() * (max - min) + min;
+        }
+        var one = [];
+        for(var i=1;i<=9;i++){
+            one[i] = getRandomArbitary(1, 25);
+        }
+
+
+        window.onload = function() {
+            var options1 = {
+                animationEnabled: true,
+                title: {
+                    text: "Spline Chart using jQuery Plugin"
+                },
+                axisX: {
+                    labelFontSize: 14
+                },
+                axisY: {
+                    labelFontSize: 14
+                },
+                data: [{
+                    type: "spline", //change it to line, area, bar, pie, etc
+                    dataPoints: [
+                        { y: 1 },
+                        { y: 35 },
+                        { y: 10 },
+                        { y: 12 },
+                        { y: 19 },
+                        { y: 14 },
+                        { y: 26 },
+                        { y: 10 },
+                        { y: 22 }
+                    ]
+                }]
+            };
+
+            var options2 = {
+                title: {
+                    text: "Spline Area Chart using jQuery Plugin"
+                },
+                axisX: {
+                    labelFontSize: 14
+                },
+                axisY: {
+                    labelFontSize: 14
+                },
+                data: [{
+                    type: "splineArea", //change it to line, area, bar, pie, etc
+                    dataPoints: [
+                        { y: one[1] },
+                        { y: one[2] },
+                        { y: one[3] },
+                        { y: one[4] },
+                        { y: one[5] },
+                        { y: one[6] },
+                        { y: one[7] },
+                        { y: one[8] },
+                        { y: one[9] }
+                    ]
+                }]
+            };
+
+            $("#tabs").tabs({
+                create: function (event, ui) {
+                    //Render Charts after tabs have been created.
+                    $("#chartContainer1").CanvasJSChart(options1);
+                    $("#chartContainer2").CanvasJSChart(options2);
+                },
+                activate: function (event, ui) {
+                    //Updates the chart to its container size if it has changed.
+                    ui.newPanel.children().first().CanvasJSChart().render();
+                }
+            });
+
+        }
+    </script>
+
+{% endblock individual_style %}
+{% block nav_bar %}
+    <li><a href="{{ path('main_home') }}" class="glyphicon glyphicon-home"></a></li>
+    <li class="active"><a href="{{ path('main_rooms') }}">Комнаты</a></li>
+    <li><a href="{{ path('dispatcher_devices') }}">Диспетчер устройств</a></li>
+    <li><a href="{{ path('main_widgets') }}">Виджеты</a></li>
+    <li><a href="{{ path('main_settings') }}">Настройки</a></li>
+{% endblock nav_bar %}
+{% block main_content %}
+
+
+
+    <script>
+
+        function sendPost() {
+            $.ajax ({
+                url: "{{ path('main_set_activator') }}",
+                type: "POST",
+                data: {"ask" : "1"}
+            })
+        }
+    </script>
+    <div class="col-md-9 room-container text-left">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row room-top">
+                    <div class="col-md-12 ">
+                        {{ i.name }}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 room-image">
+                        <p class="date">2018</p>
+                        <img  src='{{ asset(i.linkToImage) }}' alt="...">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-6 room-widget">
+                                <canvas id="canvas" width="150" height="150"
+                                        style="background-color:#40494e;margin-top: 10px">
+                                </canvas>
+                                <script src ="{{ asset('assets/js/clock-script.js') }}"></script>
+                            </div>
+                            <div class="col-md-6 room-widget security">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>Система охраны</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 security-img">
+                                        <img src="{{ asset('assets/images/security.png') }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h1>Вкл</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 room-widget temperature">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>Температура</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 temperature-img">
+                                        <img src="{{ asset('assets/images/thermometer.png') }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        {% for value in sensor_value %}
+                                            <h1>{{ value.reading }} &deg;С</h1>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 room-widget humidity">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p>Влажность</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 humidity-img">
+                                        <img src="{{ asset('assets/images/humidity.png') }}">
+                                    </div>
+                                    <div class="col-md-8">
+                                            <h1>52%</h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row room-box">
+                    <div class="col-md-3 room-widget light">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Свет</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 light-img">
+                                <img src="{{ asset('assets/images/light.png') }}">
+                            </div>
+                            <div class="col-md-8">
+                                <h2>Вкл</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 room-widget jalousie">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Окна</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 jalousie-img">
+                                <img src="{{ asset('assets/images/jalousie.png') }}">
+                            </div>
+                            <div class="col-md-8">
+                                <h2>Откр</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 room-widget conditioner">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>Окна</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 conditioner-img">
+                                <img src="{{ asset('assets/images/conditioner.png') }}">
+                            </div>
+                            <div class="col-md-8">
+                                <h2>Вкл</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 room-widget graph">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <p>График температуры</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 graph-img">
+                                <div id="tabs" >
+                                    <div id="tabs-1" style="height: 120px">
+                                        <div id="chartContainer1" style="height: 100px; width: 100%;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery-ui.1.11.2.min.js"></script>
+    <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+    <!--
+<h4>{{ i.getName() }}</h4>
+                            <img  src='{{ asset(i.linkToImage) }}' alt="...">
+
+                            <p class="temperature">
+                                {% for value in sensor_value %}
+                                    Температура : {{ value.reading }} &deg;С
+                                {% endfor %}
+                            </p>
+                            <p class="humidity">
+                                Влажность 60 %
+                            </p>
+                            {% if i.sensor == 'Temperature1' %}
+                                <div class="can-toggle">
+                                    <input id="{{ i.getName() }}" type="checkbox" onclick="sendPost()" {% if device_status == '1' %}checked{% endif %} >
+                                    <label for="{{ i.getName() }}">
+                                        <div class="can-toggle__switch" data-checked="Вкл"  data-unchecked="Выкл"></div>
+                                        <div class="can-toggle__label-text">Свет</div>
+                                    </label>
+                                </div>
+                            {% endif %}
+-->
+{% endblock main_content %}
+

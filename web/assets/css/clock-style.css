@@ -1,0 +1,61 @@
+
+#clockbase {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    margin: 0 auto;
+    background: url("../images/clock_bg.jpg") no-repeat;
+    background-size: 200px 200px;
+}
+#minutes {
+    width: 229px;
+    height: 229px;
+    position: absolute;
+    top: 200px;
+    left: 137px;
+    background: url("../images/minutes-arm.png") no-repeat;
+}
+#hours {
+    width: 200px;
+    height: 200px;
+    position: absolute;
+    top: 220px;
+    left: 150px;
+    background: url("../images/hours-arm.png") no-repeat left bottom;
+}
+#seconds {
+    width: 260px;
+    height: 260px;
+    position: absolute;
+    top: 184px;
+    left: 120px;
+    background: url("../images/SECS.gif) no-repeat;
+
+}
+#clockbase .min05 {background-position: left top;}
+#clockbase .min10 {background-position: left -229px;}
+#clockbase .min15 {background-position: left -458px;}
+#clockbase .min20 {background-position: left -687px;}
+#clockbase .min25 {background-position: left -916px;}
+#clockbase .min30 {background-position: left -1145px;}
+#clockbase .min35 {background-position: left -1374px;}
+#clockbase .min40 {background-position: left -1603px;}
+#clockbase .min45 {background-position: left -1832px;}
+#clockbase .min50 {background-position: left -2061px;}
+#clockbase .min55 {background-position: left -2290px;}
+#clockbase .min00 {background-position: left -2519px;}
+
+#clockbase .hr1 {background-position: left top;}
+#clockbase .hr2 {background-position: left -200px;}
+#clockbase .hr3 {background-position: left -400px;}
+#clockbase .hr4 {background-position: left -600px;}
+#clockbase .hr5 {background-position: left -800px;}
+#clockbase .hr6 {background-position: left -1000px;}
+#clockbase .hr7 {background-position: left -1200px;}
+#clockbase .hr8 {background-position: left -1400px;}
+#clockbase .hr9 {background-position: left -1600px;}
+#clockbase .hr10 {background-position: left -1800px;}
+#clockbase .hr11 {background-position: left -2000px;}
+#clockbase .hr12 {background-position: left -2200px;}
+
+

@@ -1,41 +1,10 @@
 
-.device_manager{
-    border:2px inset #708090;
-   # background: #A825FF;
-    font-size: 25px;
-}
-.device_manager a:hover{
-    background: #9223e1;
-    text-decoration: none;
-}
-.devices, .interfaces{
-    #display:block;
-    border: solid 1px #D3D3D3;
-    color: #353e09;
-    margin-right: 10px;
-    font-size: 18px;
-    background: #9999FF;
-    padding: 5px;
-    border-radius: 5px;
-}
-.active{
-    background: #ff1c15;
-    color:black;
-}
-.level2{
-    margin-top:-4px;
-    background: #ffffff;
-}
-.active2{
-    background: #e1e1e1;
-    //color:black;
-}
 /*       -------------------------#borders -----------------------------------------------*/
 .bord{
-    border: 1px solid #474747;
+    border: 2px outset gainsboro;
 }
 .bord-bot{
-    border-bottom: 1px groove #737373;
+    border: 2px outset gainsboro;
 }
 .bord-righ{
     border-right: 1px solid #737373;
@@ -45,7 +14,22 @@
 }
 
 /* ----------------------------------------------#New style------------------------------------------------------ */
+.active{
+    background: #a7ff64;
+    color:black;
+    border-radius: 7px;
+    font-style: italic;
+}
 
+.container {
+    background: #99CCBB;
+}
+.container a{
+    text-decoration:none;
+}
+.container a:hover{
+    color: #ffffff;
+}
 .top-level a{
     //background: #0f0f0f;
     padding:7px;

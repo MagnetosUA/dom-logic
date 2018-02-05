@@ -289,5 +289,47 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function roomAction(Request $request, $roomId)
+    {
+        $form = $this->createForm(OnOffType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            /** @var Device $device */
+            $device = $form->getData();
+            if ($device->getStatus() == '0') {
+                $device->setStatus('1');
+            } else {
+                $device->setStatus('0');
+            }
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($device);
+            $em->flush();
 
+            return $this->redirectToRoute('dispatcher_scanning');
+        }
+
+        $room = $this->getDoctrine()
+            ->getRepository('MainBundle:Room')
+            ->find($roomId);
+        $task = $this->getDoctrine()
+            ->getRepository('MainBundle:Task')
+            ->findAll();
+        $sensorValue = $this->getDoctrine()
+            ->getRepository('MainBundle:SensorValue')
+            ->getByLastId()->getResult();
+        $deviceStatus = $this->getDoctrine()
+            ->getRepository('MainBundle:Device')
+            ->findByPersonalId('/28.FFC85AC11604')->getResult();
+        foreach ($deviceStatus as $status) {
+            $deviceStatus = ($status['status']);
+        }
+
+        return $this->render('MainBundle:Default:room.html.twig', [
+            'form' => $form->createView(),
+            'device_status' => $deviceStatus,
+            'i' =>  $room,
+            'task' => $task,
+            'sensor_value' => $sensorValue,
+        ]);
+    }
 }

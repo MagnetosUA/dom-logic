@@ -1,5 +1,8 @@
 body{
-    background: #bcd29a;
+     /*background: #d2b481;*/
+    /*background: #204d74;*/
+    background: url("../images/textures/gr1.jpg")no-repeat;
+    /*background-size: 3000px 3000px;*/
     font-size: 20px;
 }
 a{

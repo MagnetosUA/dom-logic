@@ -39,7 +39,7 @@
 {% endif %}
 
     <div class="row">
-        <div class="col-md-10 top-level bord">
+        <div class="col-md-10 top-level bord container">
             <div class="row bord-bot pad-bot-20">
                 <div class="col-md-2 {% if thing=='devices' %}active{% endif %}">
                     <a href="{{ path('dispatcher_devices') }}">
@@ -69,6 +69,7 @@
                             </li>
                         </ul>
                     </div>
+                    {% if sensors is defined or activators is defined %}
                     <div class="col-md-8 bord">
                         <ol>
                             {% if sensors is defined %}
@@ -92,6 +93,7 @@
                             {% endif %}
                         </ol>
                     </div>
+                    {% endif %}
                 {% endif %}
 
                 <!-- Interfaces ---------------------------------------    -->
@@ -111,6 +113,7 @@
                             </li>
                         </ul>
                     </div>
+                    {% if onewire is defined or wifi is defined %}
                     <div class="col-md-6 bord">
                         <ol>
                             {% if onewire is defined %}
@@ -186,7 +189,11 @@
                         {% if onewire is defined %}
                         <a href="{{ path('dispatcher_scanning') }}">Сканирование</a>
                         {% endif %}
+                        {% if wifi is defined %}
+                            <a href="#">Сканирование</a>
+                        {% endif %}
                     </div>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

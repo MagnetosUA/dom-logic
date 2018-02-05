@@ -1,11 +1,53 @@
-.room{
-    border: dashed;
+.room-container{
+    background: #40494e;
+    text-align: center;
+    color:white;
+}
 
-    margin: 1% 2%;
-    background: #00CC00;
+.room-top{
+    border: 1px solid #afd9ee;
+    border-radius: 10px;
 }
 
 .room img{
     height:180px;
     width: 210px;
 }
+
+
+.room-image img{
+    width:80%;
+}
+.room-image{
+    height:400px;
+    border: 1px solid #afd9ee;
+    border-radius: 10px;
+}
+.room-widget{
+    border: 1px solid #afd9ee;
+    border-radius: 10px;
+    height:200px;
+}
+
+.temperature img{
+    width:60px;
+}
+.humidity img{
+    width:90px;
+}
+.security img{
+    width:90px;
+}
+.light img{
+    width:90px;
+}
+.jalousie img{
+    width:120px;
+}
+.conditioner img{
+    width: 140px;
+}
+.graph img{
+    width: 180px;
+}
+

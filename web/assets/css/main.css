@@ -9,8 +9,8 @@ a{
     list-style: none;
 }
 .room{
-    height: 500px;
-    border: 1px dashed brown;
+    max-height: 600px;
+    /*border: 1px dashed brown;*/
 }
 .bottom_container{
     text-align: center;

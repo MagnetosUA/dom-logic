@@ -63,7 +63,7 @@ class DefaultController extends Controller
             ->getByLastId()->getResult();
         $deviceStatus = $this->getDoctrine()
             ->getRepository('MainBundle:Device')
-            ->findByPersonalId('/28.FFC85AC11604')->getResult();
+            ->findByPersonalId('/28.FF796CC11604')->getResult();
         foreach ($deviceStatus as $status) {
             $deviceStatus = ($status['status']);
         }

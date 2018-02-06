@@ -21,9 +21,10 @@ class AjaxController extends Controller
 
 
             $em = $this->getDoctrine()->getManager();
-            $device = $em->getRepository(Device::class)->find(2);
+            $device = $em->getRepository(Device::class)->find(3);
             // Update the status in database
             $status = $device->getStatus();
+            print_r($status);
             if ($status == '1') {
                 $status = '0';
                 $ow->set("/12.C2F73D000000/PIO.BYTE", 0);

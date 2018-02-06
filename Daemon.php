@@ -37,7 +37,7 @@ function getStatus($link) {
 
 while(1) {
     if (getStatus($link)['status'] == 1) {
-        $query = "SELECT `personal_id` FROM `device` WHERE `type`='Sensor'";
+        $query = "SELECT `personal_id` FROM `devices` WHERE `type`='Sensor'";
         $result_set = $link->query($query);
         $device = [];
         while ($row = $result_set->fetch_assoc()) {
@@ -47,6 +47,7 @@ while(1) {
         $sensorId = $device[0];
         $ow = new \MagnetosCompany\MainBundle\Daemon\OWNet("tcp://127.0.0.1:4304");
 
+
         while (getStatus($link)['status'] == 1) {
             if ($value = $ow->read($device[0]."/temperature") == 0) {
                 continue;
@@ -54,7 +55,7 @@ while(1) {
             $value = $ow->read($device[0]."/temperature");
             echo $value = $ow->read($device[0]."/temperature");
             echo "\n";
-            $query = "INSERT INTO `sensor_value` (`reading`, `sensor_id`) VALUES ('$value', '$sensorId')";
+            $query = "INSERT INTO `sensor_value` (`reading`, `sensor_id`, `cur_date`) VALUES ('$value', '$sensorId', CURRENT_TIMESTAMP )";
             if ($link->query($query)) {
                 echo 'yes';
             };

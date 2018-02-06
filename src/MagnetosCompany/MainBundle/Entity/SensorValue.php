@@ -3,6 +3,7 @@
 namespace MagnetosCompany\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * SensorValue
@@ -39,6 +40,7 @@ class SensorValue
      * @var string
      *
      * @ORM\Column(name="cur_date", type="datetime", length=255)
+     * @Gedmo\Timestampable(on="create")
      */
     private $curDate;
 
@@ -98,7 +100,9 @@ class SensorValue
      */
     public function getCurDate()
     {
-        return $this->curDate;
+        $this->curDate = date_create();
+
+        return $this;
     }
 
     /**

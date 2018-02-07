@@ -1,3 +1,6 @@
+.device-widget-container{
+    margin-top: 7px;
+}
 .device-widget-block{
     border-radius: 5px;
     border: 2px outset gainsboro;
@@ -9,6 +12,7 @@
     border: 2px outset gainsboro;
     background: #99CCBB;
     color: #424c52;
+    margin-top: 7px;
 }
 
 .device-widget-block .row .col-md-4{

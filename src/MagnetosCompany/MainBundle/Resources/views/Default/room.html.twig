@@ -3,6 +3,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/button.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/room.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/clock-style.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/room-switch.css') }}">
     <script href="{{ asset('assets/js/clock-script.js') }}"></script>
 
     <link href="https://canvasjs.com/assets/css/jquery-ui.1.11.2.min.css" rel="stylesheet" />
@@ -107,7 +108,7 @@
 
         function sendPost() {
             $.ajax ({
-                url: "{{ path('main_set_activator') }}",
+                url: "{{ path('main_set_activator', {'activatorId':1}) }}",
                 type: "POST",
                 data: {"ask" : "1"}
             })
@@ -141,11 +142,15 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 security-img">
+                                    <div class="col-md-6 security-img">
                                         <img src="{{ asset('assets/images/security.png') }}">
                                     </div>
-                                    <div class="col-md-8">
-                                        <h1>Вкл</h1>
+                                    <div class="col-md-6">
+                                        <h3>Вкл</h3>
+                                        <label class="switch switch_type1" role="switch">
+                                            <input type="checkbox" class="switch__toggle" checked>
+                                            <span class="switch__label"></span>
+                                        </label>
                                     </div>
                                 </div>
                             </div>
@@ -158,12 +163,12 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 temperature-img">
+                                    <div class="col-md-6 temperature-img">
                                         <img src="{{ asset('assets/images/thermometer.png') }}">
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-6">
                                         {% for value in sensor_value %}
-                                            <h1>{{ value.reading }} &deg;С</h1>
+                                            <h2>{{ value.reading }} &deg;С</h2>
                                         {% endfor %}
                                     </div>
                                 </div>
@@ -175,11 +180,11 @@
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-4 humidity-img">
+                                    <div class="col-md-6 humidity-img">
                                         <img src="{{ asset('assets/images/humidity.png') }}">
                                     </div>
-                                    <div class="col-md-8">
-                                            <h1>52%</h1>
+                                    <div class="col-md-6">
+                                            <h2>52%</h2>
                                     </div>
                                 </div>
                             </div>
@@ -194,11 +199,15 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 light-img">
+                            <div class="col-md-6 light-img">
                                 <img src="{{ asset('assets/images/light.png') }}">
                             </div>
-                            <div class="col-md-8">
-                                <h2>Вкл</h2>
+                            <div class="col-md-6">
+                                <h3>Вкл</h3>
+                                <label class="switch switch_type1" role="switch">
+                                    <input type="checkbox" class="switch__toggle" checked>
+                                    <span class="switch__label"></span>
+                                </label>
                             </div>
                         </div>
                     </div>
@@ -209,26 +218,34 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 jalousie-img">
+                            <div class="col-md-6 jalousie-img">
                                 <img src="{{ asset('assets/images/jalousie.png') }}">
                             </div>
-                            <div class="col-md-8">
-                                <h2>Откр</h2>
+                            <div class="col-md-6">
+                                <h3>Откр</h3>
+                                <label class="switch switch_type1" role="switch">
+                                    <input type="checkbox" class="switch__toggle" checked>
+                                    <span class="switch__label"></span>
+                                </label>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-3 room-widget conditioner">
                         <div class="row">
                             <div class="col-md-12">
-                                <p>Окна</p>
+                                <p>Кондиционер</p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-4 conditioner-img">
+                            <div class="col-md-6 conditioner-img">
                                 <img src="{{ asset('assets/images/conditioner.png') }}">
                             </div>
-                            <div class="col-md-8">
-                                <h2>Вкл</h2>
+                            <div class="col-md-6">
+                                <h3>Вкл</h3>
+                                <label class="switch switch_type1" role="switch">
+                                    <input type="checkbox" class="switch__toggle" checked>
+                                    <span class="switch__label"></span>
+                                </label>
                             </div>
                         </div>
                     </div>

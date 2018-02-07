@@ -2,63 +2,262 @@
 {% block individual_style %}
     <link rel="stylesheet" href="{{ asset('assets/css/device-widget-block.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/pop-up-window.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/device_manager.css') }}">
 {% endblock individual_style %}
 
+
 {% block main_content %}
-    <script type="text/javascript">
 
-        //Функция показа
-        function show(state, name) {
-            document.getElementById('window').style.display = state;
-            document.getElementById('wrap').style.display = state;
-            document.getElementById('main_bundle_redactor_device_form_name').value = name;
-        }
+    {% if scanning is defined %}
+        <script type="text/javascript">
 
-        function deleteDevice(id) {
-            if(confirm('Вы действительно хотите удалить устройство ?')){
-                window.location.href = '{{ path('dispatcher_device_delete',{'deviceId' : device.id }) }}'
+            //Функция показа
+            function show(state, device, type, inter_face){
+                document.getElementById('window').style.display = state;
+                document.getElementById('wrap').style.display = state;
+                document.getElementById('main_bundle_device_form_personalId').value = device;
+                document.getElementById('main_bundle_device_form_type').value = type;
+                document.getElementById('main_bundle_device_form_interface').value = inter_face;
             }
-        }
 
-    </script>
-    <div onclick="show('none')" id="wrap"></div>
+        </script>
+        <div onclick="show('none')" id="wrap"></div>
 
-    <!-- Само окно-->
-    <div id="window">
-        <!-- Картинка крестика-->
-        <img class="close" onclick="show('none')" src="http://sergey-oganesyan.ru/wp-content/uploads/2014/01/close.png">
-        <div class="form-group">
-            <p>Введите новое имя</p>
-            {{ form_start(form) }}
-            {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
-            <button type="submit" class="btn btn-success" formnovalidate>Сохранить</button>
-            {{ form_end(form) }}
+        <!-- Само окно-->
+        <div id="window">
+            <!-- Картинка крестика-->
+            <img class="close" onclick="show('none')" src="http://sergey-oganesyan.ru/wp-content/uploads/2014/01/close.png">
+            <div class="form-group">
+                {{ form_start(form) }}
+                {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+                {{ form_row(form.type, {'attr': {'class': 'form-control'}}) }}
+                {{ form_row(form.interface, {'attr': {'class': 'form-control'}}) }}
+                {{ form_row(form.personalId, {'attr': {'class': 'form-control'}}) }}
+                <button type="submit" class="btn btn-success" formnovalidate>Создать</button>
+                {{ form_end(form) }}
+            </div>
         </div>
-    </div>
 
-    <div class="col-md-9">
-        <div class="row device-widget-block">
-            <div class="col-md-8">
-                <div class="row">
-                    <div class="col-md-4">Название</div>
-                    <div class="col-md-8">{{ device.name }}</div>
+    {% endif %}
+
+    <div class="row">
+        <div class="col-md-10 top-level bord container">
+            <div class="row bord-bot pad-bot-20">
+                <div class="col-md-2 {% if thing=='devices' %}active{% endif %}">
+                    <a href="{{ path('dispatcher_devices') }}">
+                        Устройства
+                    </a>
                 </div>
-                <div class="row">
-                    <div class="col-md-4">Тип устройства</div>
-                    <div class="col-md-8">{{ device.type }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Тип интерфейса</div>
-                    <div class="col-md-8">{{ device.interface }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">Персональный ID</div>
-                    <div class="col-md-8">{{ device.personalId }}</div>
+                <div class="col-md-2 {% if thing=='interfaces' %}active{% endif %}">
+                    <a href="{{ path('dispatcher_interfaces') }}">
+                        Интерфейсы
+                    </a>
                 </div>
             </div>
-            <div class="col-md-4">
-                <button type="button" onclick="show('block', '{{ device.name }}')" class="btn btn-primary">Редактировать</button>
-                <button type="button" onclick="deleteDevice('{{ device.id }}')" class="btn btn-danger">Удалить</button>
+            <div class="row">
+                <!-- Devices ---------------------------------------    -->
+                {% if thing=='devices' %}
+                    <div class="col-md-4">
+                        <ul>
+                            <li class="{% if sensors is defined %}active{% endif %}">
+                                <a href="{{ path('dispatcher_sensors') }} " >
+                                    Сенсоры
+                                </a>
+                            </li>
+                            <li class="{% if activators is defined %}active{% endif %}">
+                                <a href="{{ path('dispatcher_activators') }}">
+                                    Активаторы
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if sensors is defined or activators is defined %}
+                        <div class="col-md-8 bord">
+                            <ol>
+                                {% if sensors is defined %}
+                                    {% for sensor in sensors %}
+                                        <li>
+                                            <a href="{{ path('dispatcher_device_widget', {'deviceId' : sensor.id}) }}">
+                                                {{ sensor.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+
+                                {% if activators is defined %}
+                                    {% for activator in activators %}
+                                        <li>
+                                            <a href="{{ path('dispatcher_device_widget', {'deviceId' : activator.id}) }}">
+                                                {{ activator.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ol>
+                        </div>
+                    {% endif %}
+                {% endif %}
+
+                <!-- Interfaces ---------------------------------------    -->
+
+                {% if thing=='interfaces' %}
+                    <div class="col-md-4">
+                        <ul>
+                            <li class="{% if onewire is defined %}active{% endif %}">
+                                <a href="{{ path('dispatcher_onewire') }} " >
+                                    1 Wire
+                                </a>
+                            </li>
+                            <li class="{% if wifi is defined %}active{% endif %}">
+                                <a href="{{ path('dispatcher_wifi') }}">
+                                    Wi-Fi
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    {% if onewire is defined or wifi is defined %}
+                        <div class="col-md-6 bord">
+                            <ol>
+                                {% if onewire is defined %}
+                                    {% for onew in onewire %}
+                                        <li>
+                                            <a href="#" class="wid80">
+                                                {{ onew.name }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                    {% if scanning is defined %}
+                                        {% if activators is defined %}
+                                            {% for activator in activators %}
+                                                <li>
+                                                    <a href="#" class="wid80">
+                                                        {{ activator }}
+                                                    </a>
+                                                    <button  onclick="show('block', '{{ activator }}', 'Activator', '1-Wire')" class="align-right myButton">Добавить</button>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        {% if activators is defined %}
+                                            {% for sensor in sensors %}
+                                                <li>
+                                                    <a href="#" class="wid80">
+                                                        {{ sensor }}
+                                                    </a>
+                                                    {% set type = sensor %}
+                                                    <button  onclick="show('block', '{{ sensor }}', 'Sensor', '1-Wire')" class="align-right myButton">Добавить</button>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                    {% else %}
+                                        {% if activators != 0 %}
+                                            {% for activator in activators %}
+                                                <li>
+                                                    <a href="#">
+                                                        {{ activator.name }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+
+                                        {% if sensors != 0 %}
+                                            {% for sensor in sensors %}
+                                                <li>
+                                                    <a href="#">
+                                                        {{ sensor.name }}
+                                                    </a>
+                                                </li>
+                                            {% endfor %}
+                                        {% endif %}
+                                    {% endif %}
+                                    {% if device_error is defined %}
+                                        {{ device_error }}
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if wifi is defined %}
+                                    {% for i in range(1,4) %}
+                                        <li>
+                                            <a href="#">
+                                                Device Wi-Fi {{ i }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
+                            </ol>
+                        </div>
+                        <div class="col-md-2 scan">
+                            {% if onewire is defined %}
+                                <a href="{{ path('dispatcher_scanning') }}">Сканирование</a>
+                            {% endif %}
+                            {% if wifi is defined %}
+                                <a href="#">Сканирование</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <script type="text/javascript">
+
+                //Функция показа
+                function show(state, name) {
+                    document.getElementById('window').style.display = state;
+                    document.getElementById('wrap').style.display = state;
+                    document.getElementById('main_bundle_redactor_device_form_name').value = name;
+                }
+
+                function deleteDevice(id) {
+                    if(confirm('Вы действительно хотите удалить устройство ?')){
+                        window.location.href = '{{ path('dispatcher_device_delete',{'deviceId' : device.id }) }}'
+                    }
+                }
+
+            </script>
+            <div onclick="show('none')" id="wrap"></div>
+
+            <!-- Само окно-->
+            <div id="window">
+                <!-- Картинка крестика-->
+                <img class="close" onclick="show('none')" src="http://sergey-oganesyan.ru/wp-content/uploads/2014/01/close.png">
+                <div class="form-group">
+                    <p>Введите новое имя</p>
+                    {{ form_start(form) }}
+                    {{ form_row(form.name, {'attr': {'class': 'form-control'}}) }}
+                    <button type="submit" class="btn btn-success" formnovalidate>Сохранить</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+
+            <div class = "device-widget-container">
+                <div class="row device-widget-block">
+                    <div class="col-md-8">
+                        <div class="row">
+                            <div class="col-md-4">Название</div>
+                            <div class="col-md-8">{{ device.name }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Тип устройства</div>
+                            <div class="col-md-8">{{ device.type }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Тип интерфейса</div>
+                            <div class="col-md-8">{{ device.interface }}</div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">Персональный ID</div>
+                            <div class="col-md-8">{{ device.personalId }}</div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button type="button" onclick="show('block', '{{ device.name }}')" class="btn btn-primary">Редактировать</button>
+                        <button type="button" onclick="deleteDevice('{{ device.id }}')" class="btn btn-danger">Удалить</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -148,7 +148,7 @@ class DefaultController extends Controller
         if ($form->isValid()) {
             /** @var Device $device */
             $device = $form->getData();
-            $device->setPersonalId('AASS');
+            $device->setPersonalId('Virtual');
             $device->setStatus(1);
             $name = $device->getName();
             $em = $this->getDoctrine()->getManager();

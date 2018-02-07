@@ -2,6 +2,7 @@
     background: #40494e;
     text-align: center;
     color:white;
+    border-radius: 10px;
 }
 
 .room-top{
@@ -16,7 +17,9 @@
 
 
 .room-image img{
-    width:80%;
+    width:90%;
+    height:70%;
+    border-radius: 50px;
 }
 .room-image{
     height:400px;
@@ -45,7 +48,7 @@
     width:120px;
 }
 .conditioner img{
-    width: 140px;
+    width: 120px;
 }
 .graph img{
     width: 180px;

@@ -1,7 +1,10 @@
 {% extends '@Main/base.html.twig' %}
 {% block main_content %}
-    <div class="col-md-9 text-left">
+    <div class="col-md-9 text-left settings-forms">
         {{ form_start(form) }}
+        {{ form_row(form.name) }}
+        {{ form_row(form.type) }}
+        {{ form_row(form.interface) }}
         <input type="submit" value="Добавить">
         {{ form_end(form) }}
 

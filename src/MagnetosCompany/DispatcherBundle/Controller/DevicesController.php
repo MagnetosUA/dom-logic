@@ -146,6 +146,7 @@ class DevicesController extends Controller
         return $this->render('@Dispatcher/Default/device_widget.html.twig', [
             'device' => $device,
             'form' => $form->createView(),
+            'thing' => 'devices',
         ]);
     }
 

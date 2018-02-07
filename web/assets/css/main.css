@@ -41,3 +41,9 @@ a{
     color: white;
 }
 /*left-menu styles end*/
+
+/*Styles forms in Settings*/
+.settings-forms label{
+    color:white;
+}
+/*Styles forms in Settings end*/

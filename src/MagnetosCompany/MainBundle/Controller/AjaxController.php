@@ -13,7 +13,7 @@ use MagnetosCompany\MainBundle\Controller\OWNet;
 
 class AjaxController extends Controller
 {
-    public function setActivatorAction(Request $request)
+    public function setActivatorAction(Request $request, $activatorId)
     {
         if($request->request->get('ask')){                   // Get confirmation that we send ajax request
             //$status = $request->request->get('status');      // Get current status of activato
@@ -21,7 +21,7 @@ class AjaxController extends Controller
 
 
             $em = $this->getDoctrine()->getManager();
-            $device = $em->getRepository(Device::class)->find(3);
+            $device = $em->getRepository(Device::class)->find($activatorId);
             // Update the status in database
             $status = $device->getStatus();
             print_r($status);

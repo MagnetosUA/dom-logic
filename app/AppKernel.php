@@ -19,7 +19,6 @@ class AppKernel extends Kernel
             new MagnetosCompany\MainBundle\MainBundle(),
             new Symfony\Bundle\AsseticBundle\AsseticBundle(),
             new MagnetosCompany\DispatcherBundle\DispatcherBundle(),
-            new M6Web\Bundle\DaemonBundle\M6WebDaemonBundle(),
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
         ];
 
@@ -27,6 +26,7 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
+            $bundles[] = new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle();
 
             if ('dev' === $this->getEnvironment()) {
                 $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();

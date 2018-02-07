@@ -31,7 +31,7 @@ class Room
     /**
      * @var string
      *
-     * @ORM\Column(name="link_to_image", type="string", length=255, unique=true)
+     * @ORM\Column(name="link_to_image", type="string", length=255)
      */
     private $linkToImage;
 

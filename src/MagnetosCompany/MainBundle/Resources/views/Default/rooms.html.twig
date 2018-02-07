@@ -22,12 +22,13 @@
 
     function sendPost() {
         $.ajax ({
-            url: "{{ path('main_set_activator') }}",
+            url: "{{ path('main_set_activator', {'activatorId': 1}) }}",
             type: "POST",
             data: {"ask" : "1"},
         })
     }
 </script>
+
     <div class="col-md-9 text-left">
         <div class="row">
             <div class="col-md-12">
@@ -35,6 +36,7 @@
                     <div class="w3-content"">
                     {% set cnt = 0 %}
                         {% for i in room %}
+
                             {% if cnt%3==0  %}
                                 <div class="mySlides">
                             {% endif %}

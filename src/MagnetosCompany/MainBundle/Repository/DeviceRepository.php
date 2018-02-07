@@ -21,6 +21,17 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
+    public function findByName($name)
+    {
+        $query = $this->createQueryBuilder('d')
+            ->select('d.id')
+            ->where('d.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery();
+
+        return $query;
+    }
+
     public function findByPersonalId($personalId)
     {
         $query = $this->createQueryBuilder('d')

@@ -37,7 +37,7 @@ function getStatus($link) {
 
 while(1) {
     if (getStatus($link)['status'] == 1) {
-        $query = "SELECT `personal_id` FROM `devices` WHERE `type`='Sensor'";
+        $query = "SELECT `personal_id` FROM `devices` WHERE `type`='Sensor' AND `personal_id` != 'Virtual'";
         $result_set = $link->query($query);
         $device = [];
         while ($row = $result_set->fetch_assoc()) {

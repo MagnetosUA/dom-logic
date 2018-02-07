@@ -61,16 +61,16 @@ class DefaultController extends Controller
         $sensorValue = $this->getDoctrine()
             ->getRepository('MainBundle:SensorValue')
             ->getByLastId()->getResult();
-        $deviceStatus = $this->getDoctrine()
-            ->getRepository('MainBundle:Device')
-            ->findByPersonalId('/28.FF796CC11604')->getResult();
-        foreach ($deviceStatus as $status) {
-            $deviceStatus = ($status['status']);
-        }
+        $devices = $this->getDoctrine()
+            ->getRepository('MainBundle:Device')->findAll();
+            //->findByPersonalId('/28.FF796CC11604')->getResult();
+//        foreach ($deviceStatus as $status) {
+//            $deviceStatus = ($status['status']);
+//        }
 
         return $this->render('MainBundle:Default:rooms.html.twig', [
             'form' => $form->createView(),
-            'device_status' => $deviceStatus,
+            'devices' => $devices,
             'room' =>  $room,
             'task' => $task,
             'sensor_value' => $sensorValue,
@@ -264,7 +264,7 @@ class DefaultController extends Controller
 
     public function setscanAction(Request $request)
     {
-        $setting = $this->getDoctrine()->getRepository(Setting::class)->find(1);
+        $setting = $this->getDoctrine()->getRepository(Setting::class)->find(6);
         $form = $this->createForm(SettingsType::class);
         $form->handleRequest($request);
         if ($form->isValid()) {
@@ -291,6 +291,7 @@ class DefaultController extends Controller
 
     public function roomAction(Request $request, $roomId)
     {
+
         $form = $this->createForm(OnOffType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {

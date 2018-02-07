@@ -14,7 +14,7 @@
 }
 
 /* ----------------------------------------------#New style------------------------------------------------------ */
-.active{
+.container .active{
     background: #a7ff64;
     color:black;
     border-radius: 7px;

@@ -46,4 +46,14 @@ a{
 .settings-forms label{
     color:white;
 }
+.settings-forms{
+    text-align: right;
+}
+
+.add-room-form label{
+    color:white;
+}
+.set-scan-form{
+    color:white;
+}
 /*Styles forms in Settings end*/

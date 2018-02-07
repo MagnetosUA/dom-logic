@@ -51,7 +51,7 @@ main_setscan:
     defaults: { _controller: MainBundle:Default:setscan}
 
 main_set_activator:
-    path:     /set_activator/{activatorId}
+    path:     /set_activator/
     defaults: { _controller: MainBundle:Ajax:setActivator}
 
 main_room:

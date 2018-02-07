@@ -20,11 +20,11 @@
     {#For slider end#}
 <script>
 
-    function sendPost() {
+    function sendPost(activatorName) {
         $.ajax ({
-            url: "{{ path('main_set_activator', {'activatorId': 1}) }}",
+            url: "{{ path('main_set_activator') }}",
             type: "POST",
-            data: {"ask" : "1"},
+            data: {"ask" : activatorName}
         })
     }
 </script>
@@ -34,6 +34,7 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="w3-content"">
+
                     {% set cnt = 0 %}
                         {% for i in room %}
 
@@ -56,7 +57,13 @@
                                     </p>
                                     {% if 1==1 %}
                                         <div class="can-toggle">
-                                            <input id="{{ i.getName() }}" type="checkbox" onclick="sendPost()" {% if device_status == '1' %}checked{% endif %} >
+                                            {% set device_status = 0 %}
+                                            {% for device in devices %}
+                                                {% if device.name == i.device %}
+                                                    {% set device_status = device.status %}
+                                                {% endif %}
+                                            {% endfor %}
+                                            <input id="{{ i.getName() }}" type="checkbox" onclick="sendPost('{{ i.device }}')" {% if device_status == '1' %}checked{% endif %} >
                                             <label for="{{ i.getName() }}">
                                                 <div class="can-toggle__switch" data-checked="Вкл"  data-unchecked="Выкл"></div>
                                                 <div class="can-toggle__label-text">Свет</div>

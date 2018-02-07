@@ -1,4 +1,11 @@
 {% extends '@Main/base.html.twig' %}
+{% block nav_bar %}
+    <li><a href="{{ path('main_home') }}" class="glyphicon glyphicon-home"></a></li>
+    <li><a href="{{ path('main_rooms') }}">Комнаты</a></li>
+    <li><a href="{{ path('dispatcher_devices') }}">Диспетчер устройств</a></li>
+    <li><a href="{{ path('main_widgets') }}">Виджеты</a></li>
+    <li class="active"><a href="{{ path('main_settings') }}">Настройки</a></li>
+{% endblock nav_bar %}
 {% block main_content %}
     <style>
         .menu a{

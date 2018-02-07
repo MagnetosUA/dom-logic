@@ -14,18 +14,22 @@ class AddDeviceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('name', TextType::class, [
+            'label' => 'Имя'
+            ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
                     'Activator' => 'Activator',
                     'Sensor' => 'Sensor',
-                ]
+                ],
+                'label' => 'Тип',
             ])
             ->add('interface', ChoiceType::class, [
                 'choices' => [
                     '1-Wire' => '1-Wire',
                     'Wi-Fi' => 'Wi-Fi',
-                ]
+                ],
+                'label' => 'Интерфейс',
             ]);
     }
 

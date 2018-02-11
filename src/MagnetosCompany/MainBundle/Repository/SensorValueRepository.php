@@ -13,10 +13,8 @@ class SensorValueRepository extends \Doctrine\ORM\EntityRepository
     public function getByLastId()
     {
         $query = $this->createQueryBuilder('p')
-            //->where('p.sensorId =:sensorId')
             ->orderBy('p.id', 'DESC')
             ->setMaxResults(1)
-            //->setParameter('sensorId', $sensorId)
             ->getQuery();
 
         return $query;

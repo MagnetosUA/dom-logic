@@ -12,6 +12,16 @@ a{
     max-height: 600px;
     /*border: 1px dashed brown;*/
 }
+.room .thumbnail{
+    height: 400px;
+    /*border: 1px dashed brown;*/
+}
+.room .temperature{
+    color:#bd4147;
+}
+.room .humidity{
+    color: #0000F0;
+}
 .bottom_container{
     text-align: center;
 }

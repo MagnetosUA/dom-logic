@@ -58,7 +58,11 @@ class DefaultController extends Controller
         $task = $this->getDoctrine()
             ->getRepository('MainBundle:Task')
             ->findAll();
-        $sensorValue = $this->getDoctrine()
+        $sensors = $this->getDoctrine()->getRepository('MainBundle:Device')->findByType('Sensor')->getResult();
+        foreach ($sensors as $sensor) {
+            $personalId = $sensor['personalId'];
+        }
+        $sensorValues = $this->getDoctrine()
             ->getRepository('MainBundle:SensorValue')
             ->getByLastId()->getResult();
         $devices = $this->getDoctrine()
@@ -73,7 +77,7 @@ class DefaultController extends Controller
             'devices' => $devices,
             'room' =>  $room,
             'task' => $task,
-            'sensor_value' => $sensorValue,
+            'sensor_values' => $sensorValues,
         ]);
     }
 
@@ -316,8 +320,7 @@ class DefaultController extends Controller
             ->getRepository('MainBundle:Task')
             ->findAll();
         $sensorValue = $this->getDoctrine()
-            ->getRepository('MainBundle:SensorValue')
-            ->getByLastId()->getResult();
+            ->getRepository('MainBundle:SensorValue')->getByLastId()->getResult();
         $deviceStatus = $this->getDoctrine()
             ->getRepository('MainBundle:Device')
             ->findByPersonalId('/28.FFC85AC11604')->getResult();

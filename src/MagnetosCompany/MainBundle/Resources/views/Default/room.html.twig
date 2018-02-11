@@ -131,7 +131,7 @@
                         <div class="row">
                             <div class="col-md-6 room-widget">
                                 <canvas id="canvas" width="150" height="150"
-                                        style="background-color:#40494e;margin-top: 10px">
+                                        style="background-color:#2c3237;margin-top: 10px">
                                 </canvas>
                                 <script src ="{{ asset('assets/js/clock-script.js') }}"></script>
                             </div>
@@ -168,7 +168,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         {% for value in sensor_value %}
-                                            <h2>{{ value.reading }} &deg;С</h2>
+                                            <h2>{{ value.reading|round }} &deg;С</h2>
                                         {% endfor %}
                                     </div>
                                 </div>

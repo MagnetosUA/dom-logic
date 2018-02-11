@@ -34,10 +34,8 @@
             <div class="col-md-12">
                 <div class="row">
                     <div class="w3-content"">
-
                     {% set cnt = 0 %}
                         {% for i in room %}
-
                             {% if cnt%3==0  %}
                                 <div class="mySlides">
                             {% endif %}
@@ -45,12 +43,18 @@
                             <div class="col-md-4 room">
                                 <div class="thumbnail">
                                     <a href="{{ path('main_room', {'roomId' : i.id}) }}"><h4>{{ i.getName() }}</h4></a>
-                                    <img  class="img-roundedl" src='{{ asset(i.linkToImage) }}' alt="...">
-
+                                    <img  class="img-rounded" src='{{ asset(i.linkToImage) }}' alt="...">
                                     <p class="temperature">
-                                        {% for value in sensor_value %}
-                                            Температура : {{ value.reading }} &deg;С
+                                        {% for device in devices %}
+                                            {% if device.name == i.sensor %}
+                                                {% for sensor_value in sensor_values %}
+                                                    {% if device.personalId == sensor_value.sensorId %}
+                                                        Температура : {{ sensor_value.reading|round }} &deg;С
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endif %}
                                         {% endfor %}
+                                        <span style="color:white;">.</span>
                                     </p>
                                     <p class="humidity">
                                         Влажность 60 %

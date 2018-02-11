@@ -21,6 +21,17 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
         return $query;
     }
 
+    public function findPersonalIdByName($name)
+    {
+        $query = $this->createQueryBuilder('d')
+            ->select('d.personalId')
+            ->where('d.name = :name')
+            ->setParameter('name', $name)
+            ->getQuery();
+
+        return $query;
+    }
+
     public function findByName($name)
     {
         $query = $this->createQueryBuilder('d')
@@ -50,6 +61,7 @@ class DeviceRepository extends \Doctrine\ORM\EntityRepository
             ->select('d.status')
             ->where('d.personalId = :personaId')
             ->setParameter('personaId', $personalId)
+            ->setMaxResults(1)
             ->getQuery();
 
         return $query;

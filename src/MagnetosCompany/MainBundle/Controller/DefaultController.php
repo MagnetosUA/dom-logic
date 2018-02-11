@@ -67,10 +67,6 @@ class DefaultController extends Controller
             ->getByLastId()->getResult();
         $devices = $this->getDoctrine()
             ->getRepository('MainBundle:Device')->findAll();
-            //->findByPersonalId('/28.FF796CC11604')->getResult();
-//        foreach ($deviceStatus as $status) {
-//            $deviceStatus = ($status['status']);
-//        }
 
         return $this->render('MainBundle:Default:rooms.html.twig', [
             'form' => $form->createView(),
@@ -319,8 +315,14 @@ class DefaultController extends Controller
         $task = $this->getDoctrine()
             ->getRepository('MainBundle:Task')
             ->findAll();
+        $sensorName = $room->getSensor();
+
+        $sensorId = $this->getDoctrine()->getRepository('MainBundle:Device')->findPersonalIdByName($sensorName)->getResult();
+        foreach ($sensorId as $sensId) {
+            $sensorId = ($sensId['personalId']);
+        }
         $sensorValue = $this->getDoctrine()
-            ->getRepository('MainBundle:SensorValue')->getByLastId()->getResult();
+            ->getRepository('MainBundle:SensorValue')->getByLastIdByName($sensorId)->getResult();
         $deviceStatus = $this->getDoctrine()
             ->getRepository('MainBundle:Device')
             ->findByPersonalId('/28.FFC85AC11604')->getResult();
@@ -328,12 +330,18 @@ class DefaultController extends Controller
             $deviceStatus = ($status['status']);
         }
 
+        $devices = $this->getDoctrine()
+            ->getRepository('MainBundle:Device')->findAll();
+
         return $this->render('MainBundle:Default:room.html.twig', [
             'form' => $form->createView(),
             'device_status' => $deviceStatus,
             'i' =>  $room,
             'task' => $task,
             'sensor_value' => $sensorValue,
+            'sensor_id' => $sensorId,
+            'sensor_name' => $sensorName,
+            'devices' => $devices,
         ]);
     }
 }

@@ -101,19 +101,16 @@
     <li><a href="{{ path('main_settings') }}">Настройки</a></li>
 {% endblock nav_bar %}
 {% block main_content %}
-
-
-
     <script>
-
-        function sendPost() {
+        function sendPost(activatorName) {
             $.ajax ({
-                url: "{{ path('main_set_activator', {'activatorId':1}) }}",
+                url: "{{ path('main_set_activator') }}",
                 type: "POST",
-                data: {"ask" : "1"}
+                data: {"ask" : activatorName}
             })
         }
     </script>
+
     <div class="col-md-9 room-container text-left">
         <div class="row">
             <div class="col-md-12">
@@ -146,9 +143,9 @@
                                         <img src="{{ asset('assets/images/security.png') }}">
                                     </div>
                                     <div class="col-md-6">
-                                        <h3>Вкл</h3>
+                                        <h3>Выкл</h3>
                                         <label class="switch switch_type1" role="switch">
-                                            <input type="checkbox" class="switch__toggle" checked>
+                                            <input type="checkbox" class="switch__toggle">
                                             <span class="switch__label"></span>
                                         </label>
                                     </div>
@@ -203,9 +200,15 @@
                                 <img src="{{ asset('assets/images/light.png') }}">
                             </div>
                             <div class="col-md-6">
+                                {% set device_status = 0 %}
+                                {% for device in devices %}
+                                    {% if device.name == i.device %}
+                                        {% set device_status = device.status %}
+                                    {% endif %}
+                                {% endfor %}
                                 <h3>Вкл</h3>
                                 <label class="switch switch_type1" role="switch">
-                                    <input type="checkbox" class="switch__toggle" checked>
+                                    <input type="checkbox" class="switch__toggle" onclick="sendPost('{{ i.device }}')" {% if device_status == '1' %}checked{% endif %}>
                                     <span class="switch__label"></span>
                                 </label>
                             </div>
@@ -222,9 +225,9 @@
                                 <img src="{{ asset('assets/images/jalousie.png') }}">
                             </div>
                             <div class="col-md-6">
-                                <h3>Откр</h3>
+                                <h3>Закр</h3>
                                 <label class="switch switch_type1" role="switch">
-                                    <input type="checkbox" class="switch__toggle" checked>
+                                    <input type="checkbox" class="switch__toggle">
                                     <span class="switch__label"></span>
                                 </label>
                             </div>
@@ -241,9 +244,9 @@
                                 <img src="{{ asset('assets/images/conditioner.png') }}">
                             </div>
                             <div class="col-md-6">
-                                <h3>Вкл</h3>
+                                <h3>Выкл</h3>
                                 <label class="switch switch_type1" role="switch">
-                                    <input type="checkbox" class="switch__toggle" checked>
+                                    <input type="checkbox" class="switch__toggle">
                                     <span class="switch__label"></span>
                                 </label>
                             </div>

@@ -10,10 +10,22 @@ namespace MagnetosCompany\MainBundle\Repository;
  */
 class SensorValueRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getByLastIdByName($sensorId)
+    {
+        $query = $this->createQueryBuilder('d')
+            ->where('d.sensorId = :sensorId')
+            ->orderBy('d.id', 'DESC')
+            ->setParameter('sensorId', $sensorId)
+            ->setMaxResults(1)
+            ->getQuery();
+
+        return $query;
+    }
+
     public function getByLastId()
     {
-        $query = $this->createQueryBuilder('p')
-            ->orderBy('p.id', 'DESC')
+        $query = $this->createQueryBuilder('d')
+            ->orderBy('d.id', 'DESC')
             ->setMaxResults(1)
             ->getQuery();
 

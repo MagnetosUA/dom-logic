@@ -4,16 +4,12 @@ namespace MagnetosCompany\DispatcherBundle\Controller;
 
 use MagnetosCompany\MainBundle\Controller\OWNet;
 use MagnetosCompany\MainBundle\Entity\Device;
+use MagnetosCompany\MainBundle\Entity\Room;
 use MagnetosCompany\MainBundle\Form\Type\DeviceType;
 use MagnetosCompany\MainBundle\Form\Type\RedactorDeviceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use MagnetosCompany\MainBundle\Entity\Activator;
-use MagnetosCompany\MainBundle\Entity\Sensor;
-use Symfony\Component\Config\Definition\Exception\Exception;
-use Symfony\Component\Debug\Exception\ContextErrorException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Process\Process;
-use Symfony\Component\Process\Exception\ProcessFailedException;
 
 class DevicesController extends Controller
 {

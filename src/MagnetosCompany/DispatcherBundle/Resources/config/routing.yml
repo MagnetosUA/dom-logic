@@ -7,40 +7,40 @@ dispatcher_exp:
 #devices
 
 dispatcher_devices:
-    path:     /dispatcher/devices
-    defaults: { _controller: DispatcherBundle:Devices:devices }
+    path:     /{_locale}/dispatcher/devices
+    defaults: { _controller: DispatcherBundle:Devices:devices, _locale: 'en' }
 
 dispatcher_sensors:
-    path:     /dispatcher/devices/sensors
+    path:     /{_locale}/dispatcher/devices/sensors
     defaults: { _controller: DispatcherBundle:Devices:sensors }
 
 dispatcher_activators:
-    path:     /dispatcher/devices/activators
+    path:     /{_locale}/dispatcher/devices/activators
     defaults: { _controller: DispatcherBundle:Devices:activators }
 
 dispatcher_device_widget:
-    path:     /dispatcher/device_widget/{deviceId}
+    path:     /{_locale}/dispatcher/device_widget/{deviceId}
     defaults: { _controller: DispatcherBundle:Devices:deviceWidget }
 
 dispatcher_device_delete:
-    path:     /dispatcher/device_delete/{deviceId}
+    path:     /{_locale}/dispatcher/device_delete/{deviceId}
     defaults: { _controller: DispatcherBundle:Devices:deviceDelete }
 
 
 #interfaces
 
 dispatcher_interfaces:
-    path:     /interfaces
+    path:     /{_locale}/interfaces
     defaults: { _controller: DispatcherBundle:Devices:interfaces }
 
 dispatcher_onewire:
-    path:     /interfaces/1wire
+    path:     /{_locale}/interfaces/1wire
     defaults: { _controller: DispatcherBundle:Devices:onewire }
 
 dispatcher_wifi:
-    path:     /interfaces/wifi
+    path:     /{_locale}/interfaces/wifi
     defaults: { _controller: DispatcherBundle:Devices:wifi }
 
 dispatcher_scanning:
-    path:     /dispatcher/interfaces/scanning
+    path:     /{_locale}/dispatcher/interfaces/scanning
     defaults: { _controller: DispatcherBundle:Devices:scanning }

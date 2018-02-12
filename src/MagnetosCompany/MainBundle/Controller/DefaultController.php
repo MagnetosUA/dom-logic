@@ -8,13 +8,9 @@ use MagnetosCompany\MainBundle\Form\Type\AddDeviceType;
 use MagnetosCompany\MainBundle\Form\Type\OnOffType;
 use MagnetosCompany\MainBundle\Form\Type\SettingsType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request;
 use MagnetosCompany\MainBundle\Entity\Room;
 use MagnetosCompany\MainBundle\Entity\Device;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use MagnetosCompany\MainBundle\Form\Type\DeviceType;
 
 class DefaultController extends Controller
@@ -27,6 +23,7 @@ class DefaultController extends Controller
         $widget = $this->getDoctrine()
             ->getRepository('MainBundle:Widget')
             ->find(1);
+        $widget = $widget->getStatus();
         return $this->render('MainBundle:Default:home.html.twig', [
             'task' => $task,
             'widget' => $widget,

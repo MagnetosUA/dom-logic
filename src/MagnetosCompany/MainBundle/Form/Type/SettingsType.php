@@ -3,6 +3,7 @@
 namespace MagnetosCompany\MainBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\RangeType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -16,8 +17,25 @@ class SettingsType extends AbstractType
         $builder
             ->add('status', ChoiceType::class, [
                 'choices' => ['Запустить' => '1', 'Остановить' => '0'],
+                'label' => 'Статус',
             ])
-            ->add('time', TextType::class);
+//            ->add('time', ChoiceType::class, [
+//                'choices' => [
+//                    '2' => '2',
+//                    '10' => '10',
+//                    '60' => '60',
+//                    '300' => '300',
+//                    '1200' => '1200',
+//                ],
+//                'label' => 'Время (с)',
+//            ])
+            ->add('time', RangeType::class, [
+                'attr' => [
+                    'min' => 2,
+                    'max' => 1200,
+                ],
+                'label' => 'Время от 2 сек. - до 20 мин',
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

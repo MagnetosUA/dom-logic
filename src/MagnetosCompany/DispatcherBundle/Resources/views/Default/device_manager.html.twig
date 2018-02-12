@@ -49,12 +49,12 @@
             <div class="row bord-bot pad-bot-20">
                 <div class="col-md-2 {% if thing=='devices' %}active{% endif %}">
                     <a href="{{ path('dispatcher_devices') }}">
-                        Устройства
+                        {{ 'Devices'|trans }}
                     </a>
                 </div>
                 <div class="col-md-2 {% if thing=='interfaces' %}active{% endif %}">
                     <a href="{{ path('dispatcher_interfaces') }}">
-                        Интерфейсы
+                        {{ 'Interfaces'|trans }}
                     </a>
                 </div>
             </div>
@@ -65,12 +65,12 @@
                         <ul>
                             <li class="{% if sensors is defined %}active{% endif %}">
                                 <a href="{{ path('dispatcher_sensors') }} " >
-                                    Сенсоры
+                                    {{ 'Sensors'|trans }}
                                 </a>
                             </li>
                             <li class="{% if activators is defined %}active{% endif %}">
                                 <a href="{{ path('dispatcher_activators') }}">
-                                    Активаторы
+                                    {{ 'Activators'|trans }}
                                 </a>
                             </li>
                         </ul>

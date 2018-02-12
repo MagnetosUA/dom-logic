@@ -72,7 +72,7 @@
                         { y: one[6] },
                         { y: one[7] },
                         { y: one[8] },
-                        { y: one[9] }
+                        { y: one[9] },
                     ]
                 }]
             };
@@ -81,6 +81,18 @@
                 create: function (event, ui) {
                     //Render Charts after tabs have been created.
                     $("#chartContainer1").CanvasJSChart(options1);
+                    //$("#chartContainer2").CanvasJSChart(options2);
+                },
+                activate: function (event, ui) {
+                    //Updates the chart to its container size if it has changed.
+                    ui.newPanel.children().first().CanvasJSChart().render();
+                }
+            });
+
+            $("#tabs0").tabs({
+                create: function (event, ui) {
+                    //Render Charts after tabs have been created.
+
                     $("#chartContainer2").CanvasJSChart(options2);
                 },
                 activate: function (event, ui) {
@@ -88,6 +100,7 @@
                     ui.newPanel.children().first().CanvasJSChart().render();
                 }
             });
+
 
         }
     </script>
@@ -101,19 +114,56 @@
     <li><a href="{{ path('main_settings') }}">Настройки</a></li>
 {% endblock nav_bar %}
 {% block main_content %}
+    {% set device_status = 0 %}
+    {% for device in devices %}
+        {% if device.name == i.device %}
+            {% set device_status = device.status %}
+        {% endif %}
+    {% endfor %}
     <script>
+        function changeSwitchInfo() {
+            if($('#light').prop('checked')){
+                $('#light-status').text('Вкл');
+            } else $('#light-status').text('Выкл');
+        }
+
         function sendPost(activatorName) {
             $.ajax ({
                 url: "{{ path('main_set_activator') }}",
                 type: "POST",
                 data: {"ask" : activatorName}
-            })
+            });
+
+            changeSwitchInfo();
+        }
+        
+        function showGraph() {
+            $('#room-wrapper').hide();
+            $('#big-graph').show();
+            $('.canvasjs-chart-canvas').width('100%');
+            $('.canvasjs-chart-canvas').height('500px');
         }
     </script>
 
+
+
+
     <div class="col-md-9 room-container text-left">
         <div class="row">
-            <div class="col-md-12">
+            {#big graph start (hide by default) #}
+            <div class="col-md-12" id="big-graph" style="display: none" onclick="(function() {
+                            location.reload();
+                    })()">
+                <div class="col-md-12 graph-img">
+                    <div id="tabs0" >
+                        <div id="tabs-1" style="height: 520px; width:100%">
+                            <div id="chartContainer2" style="height: 100px; width: 100%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {#big graph end#}
+            <div class="col-md-12" id="room-wrapper">
                 <div class="row room-top">
                     <div class="col-md-12 ">
                         {{ i.name }}
@@ -200,15 +250,9 @@
                                 <img src="{{ asset('assets/images/light.png') }}">
                             </div>
                             <div class="col-md-6">
-                                {% set device_status = 0 %}
-                                {% for device in devices %}
-                                    {% if device.name == i.device %}
-                                        {% set device_status = device.status %}
-                                    {% endif %}
-                                {% endfor %}
-                                <h3>Вкл</h3>
+                                <h3 id="light-status">{% if device_status == '1' %}Вкл{% else %}Выкл{% endif %}</h3>
                                 <label class="switch switch_type1" role="switch">
-                                    <input type="checkbox" class="switch__toggle" onclick="sendPost('{{ i.device }}')" {% if device_status == '1' %}checked{% endif %}>
+                                    <input id="light" type="checkbox" class="switch__toggle" onclick="sendPost('{{ i.device }}')" {% if device_status == '1' %}checked{% endif %}>
                                     <span class="switch__label"></span>
                                 </label>
                             </div>
@@ -255,7 +299,7 @@
                     <div class="col-md-3 room-widget graph">
                         <div class="row">
                             <div class="col-md-12">
-                                <p>График температуры</p>
+                                <p onclick="showGraph();">График температуры</p>
                             </div>
                         </div>
                         <div class="row">
